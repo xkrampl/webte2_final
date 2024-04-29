@@ -17,7 +17,11 @@ class QuestionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => \App\Models\User::all()->random(1)->first()->id,
+            'subject_id' => \App\Models\Subject::all()->random(1)->first()->id,
+            'description' => $this->faker->sentence(),
+            'type' => $this->faker->randomElement(['answers', 'opened']),
+            'is_active' => fake()->boolean
         ];
     }
 }
