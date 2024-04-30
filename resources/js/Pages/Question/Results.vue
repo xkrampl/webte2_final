@@ -1,9 +1,11 @@
 <script setup>
-
+const props = defineProps({
+    answers: Object
+})
 </script>
 
 <template>
-<h2>Edit existing question</h2>
+
 </template>
 
 <style scoped>
