@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\Subject;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Tester',
             'email' => 'test@example.com',
         ]);
+
+        Subject::factory()->count(10)->create();
+        Question::factory()->count(10)->create();
+        Answer::factory()->count(20)->create();
     }
 }

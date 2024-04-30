@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('votes', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignUuid('question_id')->references('id')->on('questions');
+
+            $table->text('text');
+            $table->boolean('is_correct')->default(false);
+
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('votes');
+        Schema::dropIfExists('answers');
     }
 };
