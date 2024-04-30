@@ -7,7 +7,7 @@ Route::get('/', function () {
     return inertia('Index/Index');
 });
 
-Route::get('{question}', [QuestionController::class, 'show']);
+Route::get('{question}', [QuestionController::class, 'show'])->name('question.show');
 Route::get('{question}/results', [QuestionController::class, 'results']);
 
 Route::resource('question', QuestionController::class)->except(['index', 'show']);
