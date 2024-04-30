@@ -1,7 +1,16 @@
 <script setup>
 import { useForm, Link } from '@inertiajs/vue3'
+import {computed} from "vue";
+
+const props = defineProps({
+    subjects: Object
+})
+
+const subjects = computed(() => props.subjects)
+
 const form = useForm({
     description: null,
+    subject: null
 })
 const create = () => form.post(route('question.store'))
 </script>
@@ -12,6 +21,10 @@ const create = () => form.post(route('question.store'))
     <form @submit.prevent="create">
         <label for="description">Description</label>
         <input type="text" v-model="form.description">
+
+        <select v-model="form.subject">
+            <option v-for="subject in subjects" :key="subject.id">{{ subject.name }}</option>
+        </select>
 
         <button type="submit">Submit</button>
     </form>

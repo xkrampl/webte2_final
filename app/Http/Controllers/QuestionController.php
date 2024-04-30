@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -16,7 +17,12 @@ class QuestionController extends Controller
 
     public function create()
     {
-        return inertia('Question/Create');
+        return inertia('Question/Create', ['subjects' => Subject::orderBy('name', 'desc')->get()]);
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
     }
 
     public function edit(Question $question)
@@ -39,6 +45,6 @@ class QuestionController extends Controller
 
     public function results(Question $question)
     {
-        return inertia('Question/Results', ['answers' => $question->answers()]);
+        return inertia('Question/Results', ['answers' => $question->answers()->get()]);
     }
 }
