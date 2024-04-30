@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->enum('type', ['answers', 'opened']);
 
-            $table->boolean('is_active')->default(false);
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
         });
