@@ -20,7 +20,7 @@ const submitAnswers = () => {
 </script>
 
 <template>
-    <div class="p-8 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-10">
+    <div class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-12">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Question: {{ question.id }}</h2>
         <p class="text-gray-600 text-sm">Description: {{ question.description }}</p>
         <p class="text-gray-600 text-sm">Subject: {{ question.subject.name }}</p>
