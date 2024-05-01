@@ -1,5 +1,6 @@
 <script setup>
 import {computed, defineProps, ref} from 'vue'
+import Delete from './Delete.vue';
 
 const props = defineProps({
     question: Object
@@ -40,6 +41,9 @@ const submitAnswers = () => {
             <button @click="submitAnswers" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
                 Submit Answers
             </button>
+
+            <!-- Here we add the Delete Component -->
+            <Delete :questionId="question.id"/>
         </div>
     </div>
 </template>
