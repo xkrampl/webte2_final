@@ -24,6 +24,11 @@
                           class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Need
                         an account? Click here.
                     </Link>
+
+                    <Link :href="route('forgot-password.create')"
+                          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot
+                        your password? Click here.
+                    </Link>
                 </div>
             </div>
         </div>

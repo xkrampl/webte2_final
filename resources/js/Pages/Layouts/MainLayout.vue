@@ -1,12 +1,3 @@
-<script setup>
-import {Link, usePage} from "@inertiajs/vue3";
-import {route} from "ziggy-js";
-import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
-import {ChevronDownIcon} from '@heroicons/vue/20/solid'
-
-const page = usePage();
-</script>
-
 <template>
     <!-- menu source: https://tailwindui.com/components/application-ui/elements/dropdowns-->
     <div class="flex flex-col min-h-screen">
@@ -37,7 +28,7 @@ const page = usePage();
                                                     Home
                                                 </Link>
                                             </MenuItem>
-                                            <MenuItem v-slot="{ active }">
+                                            <MenuItem v-slot="{ active }" v-if=page.props.user>
                                                 <Link :href="route('question.create')"
                                                       :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     Create Question
@@ -70,6 +61,16 @@ const page = usePage();
         </footer>
     </div>
 </template>
+
+
+<script setup>
+import {Link, usePage} from "@inertiajs/vue3";
+import {route} from "ziggy-js";
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import {ChevronDownIcon} from '@heroicons/vue/20/solid'
+
+const page = usePage();
+</script>
 
 <style scoped>
 /* Additional styles if needed */
