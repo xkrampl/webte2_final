@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="login" class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
+    <form @submit.prevent="register" class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
         <div class="w-full max-w-sm mx-auto">
 
             <div>
@@ -33,7 +33,7 @@
             <div class="mt-4">
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                    type="submit">Login
+                    type="submit">Register
                 </button>
             </div>
         </div>
@@ -50,5 +50,5 @@ const form = useForm({
     password: null,
     password_confirmation: null
 })
-const login = () => form.post(route('register.store'))
+const register = () => form.post(route('register.store'))
 </script>

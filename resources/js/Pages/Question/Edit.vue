@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<h2>Edit existing question</h2>
+    <h2>Edit existing question</h2>
 </template>
 
 <style scoped>

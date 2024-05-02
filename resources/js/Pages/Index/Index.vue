@@ -1,14 +1,3 @@
-<script setup>
-import {router, useForm} from '@inertiajs/vue3'
-import {route} from "ziggy-js";
-
-const form = useForm({
-    question: null,
-})
-
-const showQuestion = () => router.get(route('question.show', form.question))
-</script>
-
 <template>
     <div class="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto mt-12">
         <h1 class="text-2xl font-bold text-center text-blue-600">Votes</h1>
@@ -26,3 +15,14 @@ const showQuestion = () => router.get(route('question.show', form.question))
         </form>
     </div>
 </template>
+
+<script setup>
+import {router, useForm} from '@inertiajs/vue3'
+import {route} from "ziggy-js";
+
+const form = useForm({
+    question: null,
+})
+
+const showQuestion = () => router.get(route('question.show', form.question))
+</script>

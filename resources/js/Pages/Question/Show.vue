@@ -1,25 +1,3 @@
-<script setup>
-import {computed, defineProps, ref} from 'vue'
-import Delete from './Delete.vue';
-
-const props = defineProps({
-    question: Object
-})
-
-const question = computed(() => props.question)
-const selectedAnswers = ref([])
-const userAnswer = ref('') // For 'opened' type questions
-const isSubmitted = ref(false)
-
-const submitAnswers = () => {
-    isSubmitted.value = true;
-    console.log('Selected Answers:', selectedAnswers.value);
-    if (question.value.type === 'opened') {
-        console.log('User answer:', userAnswer.value); // Handling user input for 'opened' type questions
-    }
-}
-</script>
-
 <template>
     <div class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-12">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Question: {{ question.id }}</h2>
@@ -47,6 +25,28 @@ const submitAnswers = () => {
         </div>
     </div>
 </template>
+
+<script setup>
+import {computed, defineProps, ref} from 'vue'
+import Delete from './Delete.vue';
+
+const props = defineProps({
+    question: Object
+})
+
+const question = computed(() => props.question)
+const selectedAnswers = ref([])
+const userAnswer = ref('') // For 'opened' type questions
+const isSubmitted = ref(false)
+
+const submitAnswers = () => {
+    isSubmitted.value = true;
+    console.log('Selected Answers:', selectedAnswers.value);
+    if (question.value.type === 'opened') {
+        console.log('User answer:', userAnswer.value); // Handling user input for 'opened' type questions
+    }
+}
+</script>
 
 <style scoped>
 /* Scoped styles if needed */

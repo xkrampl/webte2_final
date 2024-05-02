@@ -1,34 +1,3 @@
-<script setup>
-import {useForm} from '@inertiajs/vue3'
-import {computed} from "vue";
-import {route} from "ziggy-js";
-
-const props = defineProps({
-    subjects: Object
-})
-
-const subjects = computed(() => props.subjects)
-
-const form = useForm({
-    description: null,
-    subject: null,
-    subjectType: 'opened', // Default value for subject type
-    numberOfAnswers: '2', // Default value for number of answers
-    answers: ['', ''], // Initialize answers array with empty strings
-    correctAnswers: [0, 0] // Initialize correctAnswers array with 0 values
-
-})
-
-const create = () => form.post(route('question.store'))
-
-const handleSubjectTypeChange = () => {
-    // Reset answers array when subject type changes
-    if (form.subjectType !== 'answers') {
-        form.answers = Array.from({length: parseInt(form.numberOfAnswers)}, () => '');
-    }
-}
-</script>
-
 <template>
     <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
         <h2 class="text-2xl font-semibold mb-4">Create new question</h2>
@@ -90,6 +59,37 @@ const handleSubjectTypeChange = () => {
         </form>
     </div>
 </template>
+
+<script setup>
+import {useForm} from '@inertiajs/vue3'
+import {computed} from "vue";
+import {route} from "ziggy-js";
+
+const props = defineProps({
+    subjects: Object
+})
+
+const subjects = computed(() => props.subjects)
+
+const form = useForm({
+    description: null,
+    subject: null,
+    subjectType: 'opened', // Default value for subject type
+    numberOfAnswers: '2', // Default value for number of answers
+    answers: ['', ''], // Initialize answers array with empty strings
+    correctAnswers: [0, 0] // Initialize correctAnswers array with 0 values
+
+})
+
+const create = () => form.post(route('question.store'))
+
+const handleSubjectTypeChange = () => {
+    // Reset answers array when subject type changes
+    if (form.subjectType !== 'answers') {
+        form.answers = Array.from({length: parseInt(form.numberOfAnswers)}, () => '');
+    }
+}
+</script>
 
 <style scoped>
 .input-field {
