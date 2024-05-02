@@ -11,7 +11,7 @@ class QuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,8 @@ class QuestionRequest extends FormRequest
         return [
             'description' => 'required|min:5',
             'is_correct'  => 'required|boolean',
+            'type'        => 'required|in:answers,opened',
+            'answers'     => 'required',
             'subject'     => 'exists:subjects,name'
         ];
     }
