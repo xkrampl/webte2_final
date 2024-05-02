@@ -20,15 +20,15 @@
                 Submit Answers
             </button>
 
-            <!-- Here we add the Delete Component -->
-            <Delete :questionId="question.id"/>
+            <Link :href="route('question.destroy', question)" method="DELETE" as="button">Delete</Link>
         </div>
     </div>
 </template>
 
 <script setup>
 import {computed, defineProps, ref} from 'vue'
-import Delete from './Delete.vue';
+import {route} from "ziggy-js";
+import {Link} from '@inertiajs/vue3'
 
 const props = defineProps({
     question: Object
