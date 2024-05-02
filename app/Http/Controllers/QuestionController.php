@@ -59,16 +59,16 @@ class QuestionController extends Controller
 
     public function edit(QuestionRequest $request, Question $question)
     {
-        Gate::authorize('update', Question::class);
+        Gate::authorize('update', $question);
 
         return inertia('Question/Edit', [
             'question' => $question->load(['user', 'subject', 'answers'])
         ]);
     }
 
-    public function update(QuestionRequest $request, Question $post)
+    public function update(QuestionRequest $request, Question $question)
     {
-        Gate::authorize('update', Question::class);
+        Gate::authorize('update', $question);
 
         $request->validated();
         return redirect()->back()->with('success', 'Upravili ste otázku.');
@@ -76,7 +76,7 @@ class QuestionController extends Controller
 
     public function destroy(Question $question)
     {
-        Gate::authorize('delete', Question::class);
+        Gate::authorize('delete', $question);
 
         $question->deleteOrFail();
         return redirect()->back()->with('success', 'Otázku ste úspešne vymazali.');
