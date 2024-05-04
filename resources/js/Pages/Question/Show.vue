@@ -16,11 +16,15 @@
                 <input type="text" v-model="userAnswer" class="p-2 border border-gray-300 rounded"
                        placeholder="Type your answer here...">
             </div>
-            <button @click="submitAnswers" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+            <Link :href="route('question.results.show', { question: question.id })" as="button"
+                  class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
                 Submit Answers
-            </button>
+            </Link>
 
-            <Link :href="route('question.destroy', question)" method="DELETE" as="button">Delete</Link>
+            <Link :href="route('question.destroy', question)" method="DELETE" as="button"
+                  class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
+                Delete
+            </Link>
         </div>
     </div>
 </template>
