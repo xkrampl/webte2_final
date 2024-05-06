@@ -6,16 +6,20 @@ use App\Http\Requests\QuestionRequest;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QuestionController extends Controller
 {
     public function show(Question $question)
     {
         Gate::authorize('viewAny', $question);
+
         return inertia('Question/Show', [
-            'question' => $question->load(['user', 'subject', 'answers'])
+            'question' => $question->load(['user', 'subject', 'answers']),
+            'qrcode' => str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', QrCode::size(200)->format('svg')->generate(route('question.show', ['question' => $question])))
         ]);
     }
 
@@ -89,5 +93,28 @@ class QuestionController extends Controller
             'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])->first()->answers_count,
             'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])->first()->answers_count
         ]);
+    }
+
+    public function setActive(Question $question, Request $request)
+    {
+        Gate::authorize('setActive', $question);
+
+        $request->validate(['active' => 'required|boolean']);
+
+        $question->update(['is_active' => $request->active]);
+        $question->save();
+
+        return redirect()->back()->with('success', 'Upravili ste stav aktívnosti otázky.');
+    }
+
+    public function duplicate(Question $question)
+    {
+        Gate::authorize('duplicate', $question);
+
+        $new_question = $question->replicate();
+        $new_question->created_at = Carbon::now();
+        $new_question->save();
+
+        return redirect()->back()->with('success', 'Duplikovali ste otázku.');
     }
 }

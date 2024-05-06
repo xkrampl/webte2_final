@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,7 +17,13 @@ Route::get('{question}', [QuestionController::class, 'show'])->name('question.sh
 Route::get('{question}/results', [QuestionController::class, 'results'])->name('question.results.show');
 
 Route::resource('question', QuestionController::class)->except(['index', 'show']);
-Route::resource('answer', AnswerController::class)->only(['store']);
+Route::resource('question/{question}/answer', AnswerController::class)->only(['store']);
+Route::put('question/{question}/active', [QuestionController::class, 'setActive'])
+    ->middleware('auth')
+    ->name('question.active');
+Route::post('question/{question}/duplicate', [QuestionController::class, 'duplicate'])
+    ->middleware('auth')
+    ->name('question.duplicate');
 
 // Auth
 Route::group(['prefix' => 'auth'], function () {
@@ -27,6 +34,14 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('register', [RegisterController::class, 'create'])->name('register.create');
     Route::post('register', [RegisterController::class, 'store'])->name('register.store');
+
+    Route::get('change-password', [ChangePasswordController::class, 'create'])
+        ->name('change-password.create')
+        ->middleware('auth');
+
+    Route::post('change-password', [ChangePasswordController::class, 'store'])
+        ->name('change-password.store')
+        ->middleware('auth');
 
     Route::get('forgot-password', [ForgotPasswordController::class, 'create'])
         ->name('forgot-password.create')
@@ -42,4 +57,15 @@ Route::group(['prefix' => 'auth'], function () {
         ->middleware('guest')
         ->name('password.update');
 
+});
+
+// Admin
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
+
+});
+
+// User
+Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(function () {
+    Route::resource('question', \App\Http\Controllers\User\QuestionController::class)
+        ->only(['index']);
 });
