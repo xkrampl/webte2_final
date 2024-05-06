@@ -70,4 +70,14 @@ class QuestionPolicy
     {
         return false;
     }
+
+    public function setActive(User $user, Question $question)
+    {
+        return $user->id === $question->user->id;
+    }
+
+    public function duplicate(User $user, Question $question)
+    {
+        return $user->id === $question->user->id;
+    }
 }
