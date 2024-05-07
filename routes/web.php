@@ -73,3 +73,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     Route::resource('question', \App\Http\Controllers\User\QuestionController::class)
         ->only(['index']);
 });
+
+// Export data
+Route::get('data/export', \App\Http\Controllers\ExportDataController::class)->name('data.export');

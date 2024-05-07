@@ -61,12 +61,13 @@ class QuestionController extends Controller
             ->with('success', 'Vytvorili ste novú otázku.');
     }
 
-    public function edit(QuestionRequest $request, Question $question)
+    public function edit(Question $question)
     {
         Gate::authorize('update', $question);
 
+        $question = $question->load(['user', 'subject', 'answers']);
         return inertia('Question/Edit', [
-            'question' => $question->load(['user', 'subject', 'answers'])
+            'question' => $question
         ]);
     }
 
