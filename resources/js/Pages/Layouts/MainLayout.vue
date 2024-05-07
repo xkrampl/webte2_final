@@ -34,10 +34,17 @@
                                                     Create Question
                                                 </Link>
                                             </MenuItem>
-                                            <MenuItem v-slot="{ active }">
+                                            <MenuItem v-slot="{ active }" v-if="!page.props.user">
                                                 <Link :href="route('login.create')"
                                                       :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     Login
+                                                </Link>
+                                            </MenuItem>
+
+                                            <MenuItem v-slot="{ active }" v-if="page.props.user">
+                                                <Link method="delete" as="button" :href="route('login.destroy')"
+                                                      :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                    Logout
                                                 </Link>
                                             </MenuItem>
                                         </div>
