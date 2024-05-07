@@ -76,3 +76,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
 
 // Export data
 Route::get('data/export', \App\Http\Controllers\ExportDataController::class)->name('data.export');
+
+// Localization
+Route::get('language/{language}', \App\Http\Controllers\LanguageController::class)->name('language');

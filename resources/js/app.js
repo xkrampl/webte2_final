@@ -3,6 +3,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import {ZiggyVue} from 'ziggy-js'
 
 import '../css/app.css'
+import base from './base.js'
 
 import MainLayout from "./Pages/Layouts/MainLayout.vue";
 
@@ -19,6 +20,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .mixin(base)
             .mount(el)
     },
     progress: {

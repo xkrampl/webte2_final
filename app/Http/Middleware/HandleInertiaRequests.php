@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use function App\Helpers\translations;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,6 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'error' => $request->session()->get('error')
             ],
             'user' => auth()->check() ? $request->user() : null,
+            'locale' => fn () => app()->getLocale(),
+            'language' => fn () => translations(lang_path(app()->getLocale() .'.json'))
         ]);
     }
 }

@@ -1,6 +1,8 @@
 <template>
     <div class="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto mt-12">
-        <h1 class="text-2xl font-bold text-center text-blue-600">Votes</h1>
+        <h1 class="text-2xl font-bold text-center text-blue-600">
+            {{ __('Votes') }}
+        </h1>
         <form @submit.prevent="showQuestion" class="space-y-4">
             <div>
                 <label for="question" class="block text-sm font-medium text-gray-700">Enter a question ID:</label>

@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
-        <h2 class="text-2xl font-semibold mb-4">Create new question</h2>
+        <h2 class="text-2xl font-semibold mb-4">{{ __('Create new question') }}</h2>
 
         <form @submit.prevent="create">
             <div class="mb-4">
