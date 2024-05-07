@@ -13,6 +13,7 @@ class QuestionController extends Controller
 
         return inertia('User/Index', [
             'questions' => auth()->user()->questions()
+                ->with(['answers', 'subject'])
                 ->filter($filters)
                 ->latest()
                 ->get(),
