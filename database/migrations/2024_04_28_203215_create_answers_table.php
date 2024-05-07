@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignIdFor(\App\Models\User::class)->nullable();
-            $table->foreignUuid('question_id')->references('id')->on('questions');
+            $table->foreignUuid('question_id')->references('id')->on('questions')->onDelete('cascade');
 
             $table->text('text');
             $table->boolean('is_correct')->default(false);

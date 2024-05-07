@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordController extends Controller
 {
-    public function index()
+    public function create()
     {
         return inertia('Auth/ChangePassword');
     }

@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only(['created_at', 'subject']);
+
         return inertia('User/Index', [
-            'questions' => auth()->user()->questions()->latest()->withTrashed()->get()
+            'questions' => auth()->user()->questions()
+                ->filter($filters)
+                ->latest()
+                ->get(),
+            'filters' => $filters
         ]);
     }
 }

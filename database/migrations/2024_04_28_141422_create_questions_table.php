@@ -19,9 +19,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Subject::class);
 
             $table->string('description');
-            $table->enum('type', ['answers', 'opened']);
+            $table->enum('type', ['answers', 'opened', 'archived']);
 
             $table->boolean('is_active')->default(true);
+
+            $table->string('archive_note')->nullable();
+            $table->dateTime('archived_at')->nullable();
 
             $table->timestamps();
         });

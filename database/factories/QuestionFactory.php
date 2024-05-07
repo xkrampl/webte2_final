@@ -20,8 +20,10 @@ class QuestionFactory extends Factory
             'user_id' => \App\Models\User::all()->random(1)->first()->id,
             'subject_id' => \App\Models\Subject::all()->random(1)->first()->id,
             'description' => $this->faker->sentence(),
-            'type' => $this->faker->randomElement(['answers', 'opened']),
-            'is_active' => fake()->boolean
+            'type' => $type = $this->faker->randomElement(['answers', 'opened', 'archived']),
+            'is_active' => $this->faker->boolean,
+            'archive_note' => $type === 'archived' ? $this->faker->sentence() : null,
+            'archived_at' => $type === 'archived' ? $this->faker->dateTime() : null
         ];
     }
 }

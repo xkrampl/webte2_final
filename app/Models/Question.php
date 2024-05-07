@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,10 @@ class Question extends Model
 
     protected $fillable = [
         'description',
-        'type'
+        'type',
+        'is_active',
+        'archive_note',
+        'archived_at'
     ];
 
     public static function booted() {
@@ -42,5 +46,16 @@ class Question extends Model
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['created_at'] ?? false, fn ($query, $value) => $query->where('created_at', '>=', $value))
+            ->when($filters['subject'] ?? false, function ($query, $subject) {
+                return $query->whereHas('subject', function ($query) use ($subject) {
+                    $query->where('name', $subject);
+                });
+            });
     }
 }

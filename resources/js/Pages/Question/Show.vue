@@ -3,6 +3,9 @@
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Question: {{ question.id }}</h2>
         <p class="text-gray-600 text-sm">Description: {{ question.description }}</p>
         <p class="text-gray-600 text-sm">Subject: {{ question.subject.name }}</p>
+
+        <div v-html="qrcode"></div>
+
         <div class="mt-4">
             <p v-if="question.type === 'answers'" class="text-gray-800 font-medium mb-4">Choose your answer:</p>
             <div v-if="question.type === 'answers'" v-for="answer in question.answers" :key="answer.id"
@@ -25,6 +28,16 @@
                   class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
                 Delete
             </Link>
+
+            <Link :href="route('question.duplicate', question)" method="POST" as="button"
+                  class="mt-4 ml-4 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-700">
+                Duplicate
+            </Link>
+
+            <Link :href="route('question.active', question)" method="PUT" as="button"
+                  class="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+                Set active/inactive
+            </Link>
         </div>
     </div>
 </template>
@@ -35,7 +48,8 @@ import {route} from "ziggy-js";
 import {Link} from '@inertiajs/vue3'
 
 const props = defineProps({
-    question: Object
+    question: Object,
+    qrcode: String
 })
 
 const question = computed(() => props.question)
