@@ -4,6 +4,9 @@
         <header class="bg-blue-300 text-white py-4">
             <div class="container mx-auto px-4 flex justify-between items-center">
                 <h1 class="text-xl font-bold">Voting system</h1>
+
+                <language-selector />
+
                 <nav>
                     <ul class="flex space-x-4">
                         <li class="relative">
@@ -75,6 +78,7 @@ import {Link, usePage} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import {ChevronDownIcon} from '@heroicons/vue/20/solid'
+import LanguageSelector from "../Components/LanguageSelector.vue";
 
 const page = usePage();
 </script>
