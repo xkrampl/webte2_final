@@ -26,9 +26,11 @@ class QuestionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Question $question): bool
+    public function view(?User $user, Question $question): Response
     {
-        return true;
+        return $question->type !== 'archived'
+            ? Response::allow()
+            : Response::deny('Táto otázka je archivovaná a nie je k dispozícii.');
     }
 
     /**
@@ -42,16 +44,24 @@ class QuestionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Question $question): bool
+    public function update(User $user, Question $question): bool|Response
     {
+        if ($question->type === 'archived') {
+            return Response::deny('Táto otázka je archivovaná a nie je k dispozícii.');
+        }
+
         return $user->id === $question->user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Question $question): bool
+    public function delete(User $user, Question $question): bool|Response
     {
+        if ($question->type === 'archived') {
+            return Response::deny('Táto otázka je archivovaná a nemôžte ju vymazať.');
+        }
+
         return $user->id === $question->user->id;
     }
 
@@ -68,7 +78,7 @@ class QuestionPolicy
      */
     public function forceDelete(User $user, Question $question): bool
     {
-        return false;
+        return $user->id === $question->user->id && $question->type !== 'archived';
     }
 
     public function setActive(User $user, Question $question)
@@ -78,6 +88,19 @@ class QuestionPolicy
 
     public function duplicate(User $user, Question $question)
     {
+        if ($question->type === 'archived') {
+            return Response::deny('Táto otázka je archivovaná a nemôžte ju duplikovať.');
+        }
+
+        return $user->id === $question->user->id;
+    }
+
+    public function closeVoting(User $user, Question $question)
+    {
+        if ($question->type === 'archived') {
+            return Response::deny('Táto otázka je archivovaná a nemôžte ju už uzavrieť.');
+        }
+
         return $user->id === $question->user->id;
     }
 }

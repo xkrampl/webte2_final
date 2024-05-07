@@ -18,12 +18,16 @@ Route::get('{question}/results', [QuestionController::class, 'results'])->name('
 
 Route::resource('question', QuestionController::class)->except(['index', 'show']);
 Route::resource('question/{question}/answer', AnswerController::class)->only(['store']);
+
 Route::put('question/{question}/active', [QuestionController::class, 'setActive'])
     ->middleware('auth')
     ->name('question.active');
 Route::post('question/{question}/duplicate', [QuestionController::class, 'duplicate'])
     ->middleware('auth')
     ->name('question.duplicate');
+Route::put('question/{question}/close-voting', [QuestionController::class, 'closeVoting'])
+    ->middleware('auth')
+    ->name('question.close');
 
 // Auth
 Route::group(['prefix' => 'auth'], function () {

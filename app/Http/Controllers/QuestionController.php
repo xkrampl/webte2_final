@@ -15,7 +15,7 @@ class QuestionController extends Controller
 {
     public function show(Question $question)
     {
-        Gate::authorize('viewAny', $question);
+        Gate::authorize('view', $question);
 
         return inertia('Question/Show', [
             'question' => $question->load(['user', 'subject', 'answers']),
@@ -74,7 +74,25 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
-        $request->validated();
+        $question->update($request->validate([
+            'description' => 'required|min:5',
+            'type'        => 'required|string|in:answers,opened',
+            'subject'     => 'exists:subjects,id',
+            'answers'     => 'required_if:type,answers|array',
+            'answers.*'   => 'nullable|required_if:type,answers|string|min:1'
+        ]));
+
+        if ($request->only('type') == 'answers') {
+            foreach ($request->only('answers') as $index => $answerText) {
+                $question->answers()->updateOrCreate([
+                    'question_id' => $question->id,
+                    'user_id'     => $request->user()->id,
+                    'text'        => $answerText,
+                    'is_correct'  => $request->correctAnswers[$index],
+                ]);
+            }
+        }
+
         return redirect()->back()->with('success', 'Upravili ste otázku.');
     }
 
@@ -83,7 +101,7 @@ class QuestionController extends Controller
         Gate::authorize('delete', $question);
 
         $question->deleteOrFail();
-        return redirect()->back()->with('success', 'Otázku ste úspešne vymazali.');
+        return redirect()->route('homepage')->with('success', 'Otázku ste úspešne vymazali.');
     }
 
     public function results(Question $question)
@@ -95,15 +113,11 @@ class QuestionController extends Controller
         ]);
     }
 
-    public function setActive(Question $question, Request $request)
+    public function setActive(Question $question)
     {
         Gate::authorize('setActive', $question);
 
-        $request->validate(['active' => 'required|boolean']);
-
-        $question->update(['is_active' => $request->active]);
-        $question->save();
-
+        $question->update(['is_active' => $question->is_active ? 0 : 1]);
         return redirect()->back()->with('success', 'Upravili ste stav aktívnosti otázky.');
     }
 
@@ -116,5 +130,19 @@ class QuestionController extends Controller
         $new_question->save();
 
         return redirect()->back()->with('success', 'Duplikovali ste otázku.');
+    }
+
+    public function closeVoting(Question $question, Request $request)
+    {
+        Gate::authorize('closeVoting', $question);
+
+        $request->validate(['archive_note' => 'required|string|min:5']);
+
+        $question->update([
+            'is_active' => 0,
+            'archive_note' => $request->only('archive_note')
+        ]);
+
+        return redirect()->route('homepage')->with('success', 'Archivovali ste otázku.');
     }
 }

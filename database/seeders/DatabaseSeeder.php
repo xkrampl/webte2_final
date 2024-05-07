@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Subject::factory()->count(10)->create();
-        Question::factory()->count(10)->create();
-        Answer::factory()->count(20)->create();
+        Question::factory()->count(20)->create();
+        Answer::factory()->count(35)->create();
     }
 }
