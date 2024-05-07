@@ -28,6 +28,12 @@
                         class="btn btn-ghost w-full md:w-auto px-6 py-2 mt-6 md:mt-6 text-gray-700 bg-transparent hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm shadow-sm hover:shadow-md transition-colors">
                     Clear Filters
                 </button>
+
+                <!-- Export Questions Button -->
+                <button @click="exportQuestions"
+                        class="btn w-full md:w-auto px-6 py-2 mt-6 md:mt-6 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm shadow-sm hover:shadow-md transition-colors">
+                    Export Questions
+                </button>
             </div>
         </div>
 
@@ -103,5 +109,9 @@ const tagColor = (type) => {
     if (type === 'answers') return 'bg-blue-500';
     if (type === 'archived') return 'bg-red-500';
     return 'bg-green-500';
+}
+
+const exportQuestions = () => {
+    window.location.href = route('data.export');  // Assumes the route name is 'data.export'
 }
 </script>

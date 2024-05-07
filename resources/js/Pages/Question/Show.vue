@@ -34,9 +34,13 @@
                 Duplicate
             </Link>
 
-            <Link :href="route('question.active', question)" method="PUT" as="button"
-                  class="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
-                Set active/inactive
+            <!-- Dynamically changing the button text based on the active state of the question -->
+            <Link :href="route('question.active', {question: question.id, active: !question.is_active})" method="PUT"
+                  as="button"
+                  class="mt-4 ml-4 px-4 py-2 text-white rounded"
+                  :class="question.is_active ? 'bg-red-500 hover:bg-red-700' : 'bg-green-500 hover:bg-green-700'"
+                  :text="question.is_active ? 'Deactivate' : 'Activate'">
+                {{ question.is_active ? 'Deactivate' : 'Activate' }}
             </Link>
         </div>
     </div>
