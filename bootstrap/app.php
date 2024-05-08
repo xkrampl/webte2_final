@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             HandleInertiaRequests::class,
+            \App\Http\Middleware\SetLocale::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
@@ -27,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->setStatusCode($response->getStatusCode());
             } elseif ($response->getStatusCode() === 419) {
                 return back()->with([
-                    'message' => 'Platnosť stránky vypršalo, skúste prosím obnoviť stránku.',
+                    'message' => 'Platnosť stránky vypršala, skúste prosím obnoviť stránku.',
                 ]);
             }
 
