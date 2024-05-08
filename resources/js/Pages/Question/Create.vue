@@ -4,12 +4,12 @@
 
         <form @submit.prevent="create">
             <div class="mb-4">
-                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
                 <input type="text" v-model="form.description" id="description" name="description" class="input-field">
             </div>
 
             <div class="mb-4">
-                <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                <label for="subject" class="block text-sm font-medium text-gray-700">{{ __('Subject') }}</label>
                 <select v-model="form.subject" id="subject" name="subject" class="input-field">
                     <option v-for="subject in subjects" :key="subject.id" :value="subject.id">{{
                             subject.name
@@ -19,17 +19,21 @@
             </div>
 
             <div class="mb-4">
-                <label for="type" class="block text-sm font-medium text-gray-700">Subject Type</label>
-                <select v-model="form.type" id="type" name="type" @change="handleSubjectTypeChange"
+                <label for="subjectType" class="block text-sm font-medium text-gray-700">{{
+                        __('Question Type')
+                    }}</label>
+                <select v-model="form.subjectType" id="subjectType" name="subjectType" @change="handleSubjectTypeChange"
                         class="input-field">
-                    <option value="opened">Opened</option>
-                    <option value="answers">Answers</option>
+                    <option value="opened">{{ __('Opened') }}</option>
+                    <option value="answers">{{ __('With Answers') }}</option>
                 </select>
             </div>
 
             <!-- Display additional fields for answers -->
-            <div v-if="form.type === 'answers'">
-                <label for="numberOfAnswers" class="block text-sm font-medium text-gray-700">Number of Answers</label>
+            <div v-if="form.subjectType === 'answers'">
+                <label for="numberOfAnswers" class="block text-sm font-medium text-gray-700">{{
+                        __('Number of Answers')
+                    }}</label>
                 <select v-model="form.numberOfAnswers" id="numberOfAnswers" name="numberOfAnswers" class="input-field">
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -38,7 +42,8 @@
 
                 <template v-for="index in parseInt(form.numberOfAnswers)" :key="index">
                     <div class="mt-4">
-                        <label :for="'answer' + index" class="block text-sm font-medium text-gray-700">Answer {{
+                        <label :for="'answer' + index" class="block text-sm font-medium text-gray-700">
+                            {{ __('Answer') }} {{
                                 index
                             }}</label>
                         <input type="text" v-model="form.answers[index - 1]" :id="'answer' + index"
@@ -48,13 +53,14 @@
                         <label class="inline-flex items-center mt-2">
                             <input type="checkbox" v-model="form.correctAnswers[index - 1]"
                                    class="form-checkbox h-5 w-5 text-indigo-600">
-                            <span class="ml-2 text-gray-700">Correct answer</span>
+                            <span class="ml-2 text-gray-700">{{ __('Correct answer') }}</span>
                         </label>
                     </div>
                 </template>
             </div>
 
-            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Submit
+            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                {{ __('Submit') }}
             </button>
         </form>
     </div>
