@@ -23,6 +23,6 @@ class AnswerController extends Controller
 
         return redirect()
             ->route('question.results.show', ['question' => $question])
-            ->with('success', 'Zaznamenali sme odpoveď na otázku.');
+            ->with('success', __('We have noted the answer to the question.'));
     }
 }

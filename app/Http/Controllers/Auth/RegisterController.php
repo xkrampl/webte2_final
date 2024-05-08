@@ -26,6 +26,6 @@ class RegisterController extends Controller
         Auth::login($user);
         event(new Registered($user));
 
-        return redirect()->route('homepage')->with('success', 'Vitajte ' . $user->name . ', úspešne ste sa zaregistrovali.');
+        return redirect()->route('homepage')->with('success', __('', ['name' => $user->name]));
     }
 }
