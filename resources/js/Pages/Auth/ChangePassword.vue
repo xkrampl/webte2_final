@@ -2,8 +2,8 @@
     <form @submit.prevent="changePassword" class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
         <div class="w-full max-w-sm mx-auto">
             <div class="mt-4">
-                <label for="current_password" class="block text-gray-700 text-sm font-bold mb-2">Current
-                    Password</label>
+                <label for="current_password"
+                       class="block text-gray-700 text-sm font-bold mb-2">{{ __('Current Password') }}</label>
                 <input id="current_password" v-model="form.current_password" type="password"
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"/>
                 <div v-if="form.errors.current_password" class="text-red-500 text-xs italic">
@@ -12,7 +12,9 @@
             </div>
 
             <div class="mt-4">
-                <label for="new_password" class="block text-gray-700 text-sm font-bold mb-2">New Password</label>
+                <label for="new_password" class="block text-gray-700 text-sm font-bold mb-2">{{
+                        __('New Password')
+                    }}</label>
                 <input id="new_password" v-model="form.new_password" type="password"
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"/>
                 <div v-if="form.errors.new_password" class="text-red-500 text-xs italic">
@@ -22,8 +24,8 @@
 
             <!-- New password confirmation input -->
             <div class="mt-4">
-                <label for="new_password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Confirm New
-                    Password</label>
+                <label for="new_password_confirmation"
+                       class="block text-gray-700 text-sm font-bold mb-2">{{ __('Confirm New Password') }}</label>
                 <input id="new_password_confirmation" v-model="form.new_password_confirmation" type="password"
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                 <div v-if="form.errors.new_password_confirmation" class="text-red-500 text-xs italic">
@@ -35,7 +37,7 @@
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                     type="submit">
-                    Change Password
+                    {{ __('Change Password') }}
                 </button>
             </div>
         </div>
