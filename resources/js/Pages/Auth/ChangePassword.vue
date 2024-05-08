@@ -1,6 +1,7 @@
 <template>
     <form @submit.prevent="changePassword" class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-12">
         <div class="w-full max-w-sm mx-auto">
+            <h2 class="text-center text-2xl font-bold text-gray-700"> {{ __('Change Password') }}</h2>
             <div class="mt-4">
                 <label for="current_password"
                        class="block text-gray-700 text-sm font-bold mb-2">{{ __('Current Password') }}</label>

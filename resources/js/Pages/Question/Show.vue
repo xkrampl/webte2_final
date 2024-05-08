@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-12">
+    <div class="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto mt-12">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ __('Question') }}: {{ question.id }}</h2>
         <p class="text-gray-600 text-sm">{{ __('Description') }}: {{ question.description }}</p>
         <p class="text-gray-600 text-sm">{{ __('Subject') }}: {{ question.subject.name }}</p>
@@ -21,29 +21,42 @@
                 <input type="text" v-model="userAnswer" class="p-2 border border-gray-300 rounded"
                        placeholder="Type your answer here...">
             </div>
-            <Link :href="route('question.results.show', { question: question.id })" as="button"
-                  class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                {{ __('Submit Answers') }}
-            </Link>
 
-            <Link :href="route('question.destroy', question)" method="DELETE" as="button"
-                  class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
-                {{ __('Delete') }}
-            </Link>
+            <div class="grid grid-cols-5 gap-1 mt-4">
+                <!-- Submit Answers Button -->
+                <Link :href="route('question.results.show', { question: question.id })" as="button"
+                      class="mt-4 ml-4 px-4 py-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out hover:bg-blue-600 shadow hover:shadow-lg">
+                    {{ __('Submit Answers') }}
+                </Link>
 
-            <Link :href="route('question.duplicate', question)" method="POST" as="button"
-                  class="mt-4 ml-4 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-700">
-                {{ __('Duplicate') }}
-            </Link>
+                <!-- Delete Button -->
+                <Link :href="route('question.destroy', question)" method="DELETE" as="button"
+                      class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded transition duration-300 ease-in-out hover:bg-red-600 shadow hover:shadow-lg">
+                    {{ __('Delete') }}
+                </Link>
 
-            <!-- Dynamically changing the button text based on the active state of the question -->
-            <Link :href="route('question.active', {question: question.id, active: !question.is_active})" method="PUT"
-                  as="button"
-                  class="mt-4 ml-4 px-4 py-2 text-white rounded"
-                  :class="question.is_active ? 'bg-red-500 hover:bg-red-700' : 'bg-green-500 hover:bg-green-700'"
-                  :text="question.is_active ? 'Deactivate' : 'Activate'">
-                {{ question.is_active ? 'Deactivate' : 'Activate' }}
-            </Link>
+                <!-- Duplicate Button -->
+                <Link :href="route('question.duplicate', question)" method="POST" as="button"
+                      class="mt-4 ml-4 px-4 py-2 bg-sky-500 text-white rounded transition duration-300 ease-in-out hover:bg-sky-600 shadow hover:shadow-lg">
+                    {{ __('Duplicate') }}
+                </Link>
+
+                <!-- Close Voting Button -->
+                <Link :href="route('question.close', question)" method="PUT" as="button"
+                      class="mt-4 ml-4 px-4 py-2 bg-gray-500 text-white rounded transition duration-300 ease-in-out hover:bg-gray-600 shadow hover:shadow-lg">
+                    {{ __('Close Voting') }}
+                </Link>
+
+                <!-- Activate/Deactivate Button -->
+                <Link :href="route('question.active', {question: question.id, active: !question.is_active})"
+                      method="PUT"
+                      as="button"
+                      class="mt-4 ml-4 px-4 py-2 text-white rounded transition duration-300 ease-in-out shadow hover:shadow-lg"
+                      :class="question.is_active ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'">
+                    {{ question.is_active ? 'Deactivate' : 'Activate' }}
+                </Link>
+            </div>
+
         </div>
     </div>
 </template>

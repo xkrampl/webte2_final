@@ -46,6 +46,7 @@
     "Name" : "Meno",
     "Confirm Password" : "Potvrď heslo",
     "Go back home." : "Späť na domovskú stránku",
+    "Close Voting" : "Uzatvor hlasovanie",
     "(and :count more error)": "(a :count ďalších chýb)",
     "(and :count more errors)": "(a :count ďalších chýb)|(a :count ďalších chýb)|(a :count ďalších chýb)",
     "All rights reserved.": "Všetky práva vyhradené.",
