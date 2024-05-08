@@ -1,13 +1,15 @@
 <template>
     <div class="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-12">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">Question: {{ question.id }}</h2>
-        <p class="text-gray-600 text-sm">Description: {{ question.description }}</p>
-        <p class="text-gray-600 text-sm">Subject: {{ question.subject.name }}</p>
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ __('Question') }}: {{ question.id }}</h2>
+        <p class="text-gray-600 text-sm">{{ __('Description') }}: {{ question.description }}</p>
+        <p class="text-gray-600 text-sm">{{ __('Subject') }}: {{ question.subject.name }}</p>
 
         <div v-html="qrcode"></div>
 
         <div class="mt-4">
-            <p v-if="question.type === 'answers'" class="text-gray-800 font-medium mb-4">Choose your answer:</p>
+            <p v-if="question.type === 'answers'" class="text-gray-800 font-medium mb-4">{{
+                    __('Choose your answer')
+                }}:</p>
             <div v-if="question.type === 'answers'" v-for="answer in question.answers" :key="answer.id"
                  :class="{'bg-green-200': isSubmitted && answer.is_correct, 'bg-red-200': isSubmitted && !answer.is_correct}">
                 <label class="flex items-center p-2">
@@ -21,17 +23,17 @@
             </div>
             <Link :href="route('question.results.show', { question: question.id })" as="button"
                   class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                Submit Answers
+                {{ __('Submit Answers') }}
             </Link>
 
             <Link :href="route('question.destroy', question)" method="DELETE" as="button"
                   class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
-                Delete
+                {{ __('Delete') }}
             </Link>
 
             <Link :href="route('question.duplicate', question)" method="POST" as="button"
                   class="mt-4 ml-4 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-700">
-                Duplicate
+                {{ __('Duplicate') }}
             </Link>
 
             <!-- Dynamically changing the button text based on the active state of the question -->

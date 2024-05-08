@@ -5,16 +5,16 @@
             <!-- Filter Form -->
             <div class="flex flex-wrap gap-4 mb-8 items-center justify-center">
                 <div class="w-full md:w-auto">
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
                     <input v-model="filterForm.created_at" type="date" id="date"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
                 </div>
                 <div class="w-full md:w-auto">
-                    <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                    <label for="subject" class="block text-sm font-medium text-gray-700">{{ __('Subject') }}</label>
                     <select v-model="filterForm.subject" id="subject"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option disabled value="">Select a Subject</option>
-                        <option v-for="subject in uniqueSubjects" :key="subject.id" :value="subject.id">{{
+                        <option disabled value="">{{ __('Select a Subject') }}</option>
+                        <option v-for="subject in uniqueSubjects" :key="subject.name" :value="subject.name">{{
                                 subject.name
                             }}
                         </option>
@@ -22,17 +22,17 @@
                 </div>
                 <button @click="filter"
                         class="btn btn-primary w-full md:w-auto px-6 py-2 mt-6 md:mt-6 text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm shadow-sm hover:shadow-md transition-colors">
-                    Apply Filters
+                    {{ __('Apply Filters') }}
                 </button>
                 <button @click="clear"
                         class="btn btn-ghost w-full md:w-auto px-6 py-2 mt-6 md:mt-6 text-gray-700 bg-transparent hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm shadow-sm hover:shadow-md transition-colors">
-                    Clear Filters
+                    {{ __('Clear Filters') }}
                 </button>
 
                 <!-- Export Questions Button -->
                 <button @click="exportQuestions"
                         class="btn w-full md:w-auto px-6 py-2 mt-6 md:mt-6 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm shadow-sm hover:shadow-md transition-colors">
-                    Export Questions
+                    {{ __('Export Questions') }}
                 </button>
             </div>
         </div>
@@ -56,7 +56,7 @@
           </span>
                 </div>
                 <div class="mt-4">
-                    <h3 class="font-semibold">Answers:</h3>
+                    <h3 class="font-semibold">{{ __('Answers') }}:</h3>
                     <ul>
                         <li v-for="answer in question.answers" :key="answer.id" class="mt-2 flex items-center">
                             <p class="flex-1">{{ answer.text }}</p>
