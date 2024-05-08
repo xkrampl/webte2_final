@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -51,7 +52,9 @@ class Question extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
-            ->when($filters['created_at'] ?? false, fn ($query, $value) => $query->where('created_at', '>=', $value))
+            ->when($filters['created_at'] ?? false,
+                fn ($query, $value) => $query->whereDate('created_at', Carbon::parse($value)->toDateString())
+            )
             ->when($filters['subject'] ?? false, function ($query, $subject) {
                 return $query->whereHas('subject', function ($query) use ($subject) {
                     $query->where('name', $subject);
