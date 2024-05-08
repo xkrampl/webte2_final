@@ -23,10 +23,10 @@ class QuestionRequest extends FormRequest
     {
         return [
             'description' => 'required|min:5',
-            'is_correct'  => 'required|boolean',
-            'type'        => 'required|in:answers,opened',
-            'answers'     => 'required',
-            'subject'     => 'exists:subjects,name'
+            'type'        => 'required|string|in:answers,opened',
+            'subject'     => 'exists:subjects,id',
+            'answers'     => 'required_if:type,answers|array',
+            'answers.*'   => 'nullable|required_if:type,answers|string|min:1'
         ];
     }
 }

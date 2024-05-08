@@ -80,7 +80,7 @@ const subjects = computed(() => props.subjects)
 const form = useForm({
     description: null,
     subject: null,
-    subjectType: 'opened', // Default value for subject type
+    type: 'opened', // Default value for subject type
     numberOfAnswers: '2', // Default value for number of answers
     answers: ['', ''], // Initialize answers array with empty strings
     correctAnswers: [0, 0] // Initialize correctAnswers array with 0 values
@@ -91,7 +91,7 @@ const create = () => form.post(route('question.store'))
 
 const handleSubjectTypeChange = () => {
     // Reset answers array when subject type changes
-    if (form.subjectType !== 'answers') {
+    if (form.type !== 'answers') {
         form.answers = Array.from({length: parseInt(form.numberOfAnswers)}, () => '');
     }
 }

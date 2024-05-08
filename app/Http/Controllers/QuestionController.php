@@ -35,24 +35,16 @@ class QuestionController extends Controller
         return inertia('Question/Create', ['subjects' => Subject::orderBy('name', 'desc')->get()]);
     }
 
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
         Gate::authorize('create', Question::class);
 
-        $validated_data = $request->validate([
-            'description' => 'required|min:5',
-            'type'        => 'required|string|in:answers,opened',
-            'subject'     => 'exists:subjects,id',
-            'answers'     => 'required_if:type,answers|array',
-            'answers.*'   => 'nullable|required_if:type,answers|string|min:1'
-        ]);
-
         $question = $request->user()->questions()->save(
-            Question::make($validated_data)->subject()->associate($request->subject)
+            Question::make($request->validated())->subject()->associate($request->subject)
         );
 
-        if ($validated_data['type'] === 'answers') {
-            foreach ($validated_data['answers'] as $index => $answerText) {
+        if ($request->subject === 'answers') {
+            foreach ($request->answers as $index => $answerText) {
                 $question->answers()->create([
                     'question_id' => $question->id,
                     'user_id'     => $request->user()->id,
@@ -81,16 +73,10 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
-        $question->update($request->validate([
-            'description' => 'required|min:5',
-            'type'        => 'required|string|in:answers,opened',
-            'subject'     => 'exists:subjects,id',
-            'answers'     => 'required_if:type,answers|array',
-            'answers.*'   => 'nullable|required_if:type,answers|string|min:1'
-        ]));
+        $question->update($request->validated());
 
-        if ($request->only('type') == 'answers') {
-            foreach ($request->only('answers') as $index => $answerText) {
+        if ($request->type === 'answers') {
+            foreach ($request->answers as $index => $answerText) {
                 $question->answers()->updateOrCreate([
                     'question_id' => $question->id,
                     'user_id'     => $request->user()->id,
