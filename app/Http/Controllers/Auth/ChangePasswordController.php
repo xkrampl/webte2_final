@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +19,7 @@ class ChangePasswordController extends Controller
     {
         $request->validate([
             'current_password' => 'required|string',
-            'new_password'     => 'required|confirmed|min:8|string'
+            'new_password' => 'required|confirmed|min:8|string'
         ]);
 
         $auth = Auth::user();

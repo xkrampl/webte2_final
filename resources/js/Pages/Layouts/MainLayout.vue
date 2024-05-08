@@ -5,7 +5,7 @@
             <div class="container mx-auto px-4 flex justify-between items-center">
                 <h1 class="text-xl font-bold">Voting system</h1>
 
-                <language-selector />
+                <language-selector/>
 
                 <nav>
                     <ul class="flex space-x-4">
@@ -50,7 +50,13 @@
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem v-slot="{ active }" v-if="page.props.user">
-                                                <Link method="delete" as="button" :href="route('login.destroy')"
+                                                <Link method="get" :href="route('change-password.create')"
+                                                      :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                    Change Password
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }" v-if="page.props.user">
+                                                <Link method="delete" :href="route('login.destroy')"
                                                       :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     Logout
                                                 </Link>
