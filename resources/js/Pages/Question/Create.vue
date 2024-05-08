@@ -19,8 +19,8 @@
             </div>
 
             <div class="mb-4">
-                <label for="subjectType" class="block text-sm font-medium text-gray-700">Subject Type</label>
-                <select v-model="form.subjectType" id="subjectType" name="subjectType" @change="handleSubjectTypeChange"
+                <label for="type" class="block text-sm font-medium text-gray-700">Subject Type</label>
+                <select v-model="form.type" id="type" name="type" @change="handleSubjectTypeChange"
                         class="input-field">
                     <option value="opened">Opened</option>
                     <option value="answers">Answers</option>
@@ -28,7 +28,7 @@
             </div>
 
             <!-- Display additional fields for answers -->
-            <div v-if="form.subjectType === 'answers'">
+            <div v-if="form.type === 'answers'">
                 <label for="numberOfAnswers" class="block text-sm font-medium text-gray-700">Number of Answers</label>
                 <select v-model="form.numberOfAnswers" id="numberOfAnswers" name="numberOfAnswers" class="input-field">
                     <option value="2">2</option>
@@ -74,7 +74,7 @@ const subjects = computed(() => props.subjects)
 const form = useForm({
     description: null,
     subject: null,
-    subjectType: 'opened', // Default value for subject type
+    type: 'opened', // Default value for subject type
     numberOfAnswers: '2', // Default value for number of answers
     answers: ['', ''], // Initialize answers array with empty strings
     correctAnswers: [0, 0] // Initialize correctAnswers array with 0 values
@@ -85,7 +85,7 @@ const create = () => form.post(route('question.store'))
 
 const handleSubjectTypeChange = () => {
     // Reset answers array when subject type changes
-    if (form.subjectType !== 'answers') {
+    if (form.type !== 'answers') {
         form.answers = Array.from({length: parseInt(form.numberOfAnswers)}, () => '');
     }
 }
