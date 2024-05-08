@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->setStatusCode($response->getStatusCode());
             } elseif ($response->getStatusCode() === 419) {
                 return back()->with([
-                    'message' => 'Platnosť stránky vypršala, skúste prosím obnoviť stránku.',
+                    'error' => __('The page has expired, please try to refresh the page.'),
                 ]);
             }
 

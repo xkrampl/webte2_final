@@ -30,7 +30,7 @@ class QuestionPolicy
     {
         return $question->type !== 'archived'
             ? Response::allow()
-            : Response::deny('Táto otázka je archivovaná a nie je k dispozícii.');
+            : Response::deny(__('This question is archived and not available.'));
     }
 
     /**
@@ -47,7 +47,7 @@ class QuestionPolicy
     public function update(User $user, Question $question): bool|Response
     {
         if ($question->type === 'archived') {
-            return Response::deny('Táto otázka je archivovaná a nie je k dispozícii.');
+            return Response::deny(__('This question is archived and cannot be edited.'));
         }
 
         return $user->id === $question->user->id;
@@ -59,7 +59,7 @@ class QuestionPolicy
     public function delete(User $user, Question $question): bool|Response
     {
         if ($question->type === 'archived') {
-            return Response::deny('Táto otázka je archivovaná a nemôžte ju vymazať.');
+            return Response::deny(__('This question is archived and cannot be edited.'));
         }
 
         return $user->id === $question->user->id;
@@ -89,7 +89,7 @@ class QuestionPolicy
     public function duplicate(User $user, Question $question)
     {
         if ($question->type === 'archived') {
-            return Response::deny('Táto otázka je archivovaná a nemôžte ju duplikovať.');
+            return Response::deny(__('This question is archived and cannot be edited.'));
         }
 
         return $user->id === $question->user->id;
@@ -98,7 +98,7 @@ class QuestionPolicy
     public function closeVoting(User $user, Question $question)
     {
         if ($question->type === 'archived') {
-            return Response::deny('Táto otázka je archivovaná a nemôžte ju už uzavrieť.');
+            return Response::deny(__('This question is archived and cannot be edited.'));
         }
 
         return $user->id === $question->user->id;

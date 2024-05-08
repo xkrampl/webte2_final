@@ -25,17 +25,17 @@ class ChangePasswordController extends Controller
         $auth = Auth::user();
 
         if (!Hash::check($request->get('current_password'), $auth->password)) {
-            return redirect()->back()->with('error', 'Súčasné heslo je neplatné.');
+            return redirect()->back()->with('error', __('The current password is invalid.'));
         }
 
         if (strcmp($request->get('current_password'), $request->new_password) == 0) {
-            return redirect()->back()->with('error', 'Nové heslo nesmie byť rovnaké ako súčasné.');
+            return redirect()->back()->with('error', __('The new password must not be the same as the current password.'));
         }
 
         $user = User::find($auth->id);
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->back()->with('success', 'Heslo úspešne zmenené.');
+        return redirect()->back()->with('success', __('Password changed successfully.'));
     }
 }

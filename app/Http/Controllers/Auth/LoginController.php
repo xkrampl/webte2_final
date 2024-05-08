@@ -26,7 +26,7 @@ class LoginController extends Controller
         }
 
         $request->session()->regenerate();
-        return redirect()->intended('/')->with('success', auth()->user()->name . ', vitajte späť!');
+        return redirect()->intended('/')->with('success', __(':name, welcome back!', ['name' => auth()->user()->name]));
     }
 
     public function destroy(Request $request)
@@ -36,6 +36,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('homepage')->with('success', 'Úspešne ste sa odhlásili.');
+        return redirect()->route('homepage')->with('success', __('You have successfully logged out.'));
     }
 }

@@ -19,7 +19,13 @@ class QuestionController extends Controller
 
         return inertia('Question/Show', [
             'question' => $question->load(['user', 'subject', 'answers']),
-            'qrcode' => str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', QrCode::size(200)->format('svg')->generate(route('question.show', ['question' => $question])))
+            'qrcode' => str_replace(
+                '<?xml version="1.0" encoding="UTF-8"?>',
+                '',
+                QrCode::size(200)->format('svg')->generate(
+                    route('question.show', ['question' => $question])
+                )
+            )
         ]);
     }
 
@@ -58,7 +64,7 @@ class QuestionController extends Controller
 
         return redirect()
             ->route('question.show', ['question' => $question])
-            ->with('success', 'Vytvorili ste novú otázku.');
+            ->with('success', __('You have created a new question.'));
     }
 
     public function edit(Question $question)
@@ -94,7 +100,7 @@ class QuestionController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Upravili ste otázku.');
+        return redirect()->back()->with('success', __('You have modified the question.'));
     }
 
     public function destroy(Question $question)
@@ -102,7 +108,7 @@ class QuestionController extends Controller
         Gate::authorize('delete', $question);
 
         $question->deleteOrFail();
-        return redirect()->route('homepage')->with('success', 'Otázku ste úspešne vymazali.');
+        return redirect()->route('homepage')->with('success', __('You have successfully deleted the question.'));
     }
 
     public function results(Question $question)
@@ -119,7 +125,7 @@ class QuestionController extends Controller
         Gate::authorize('setActive', $question);
 
         $question->update(['is_active' => $question->is_active ? 0 : 1]);
-        return redirect()->back()->with('success', 'Upravili ste stav aktívnosti otázky.');
+        return redirect()->back()->with('success', __('You have edited the active status of the query.'));
     }
 
     public function duplicate(Question $question)
@@ -130,7 +136,7 @@ class QuestionController extends Controller
         $new_question->created_at = Carbon::now();
         $new_question->save();
 
-        return redirect()->back()->with('success', 'Duplikovali ste otázku.');
+        return redirect()->back()->with('success', __('You have duplicated the question.'));
     }
 
     public function closeVoting(Question $question, Request $request)
@@ -144,6 +150,6 @@ class QuestionController extends Controller
             'archive_note' => $request->only('archive_note')
         ]);
 
-        return redirect()->route('homepage')->with('success', 'Archivovali ste otázku.');
+        return redirect()->route('homepage')->with('success', __('You archived the question.'));
     }
 }
