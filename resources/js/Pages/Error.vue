@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import {computed} from 'vue'
 
-const props = defineProps({ status: Number })
+const props = defineProps({status: Number})
 
 const title = computed(() => {
     return {
@@ -23,8 +23,8 @@ const description = computed(() => {
 </script>
 
 <template>
-    <div>
-        <H1>{{ title }}</H1>
-        <div>{{ description }}</div>
+    <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+        <h1 class="text-3xl font-semibold text-gray-800">{{ title }}</h1>
+        <div class="mt-4 text-lg text-gray-600">{{ description }}</div>
     </div>
 </template>

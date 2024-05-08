@@ -32,6 +32,12 @@
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem v-slot="{ active }" v-if=page.props.user>
+                                                <Link :href="route('user.question.index')"
+                                                      :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                    Dashboard
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }" v-if=page.props.user>
                                                 <Link :href="route('question.create')"
                                                       :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     Create Question
