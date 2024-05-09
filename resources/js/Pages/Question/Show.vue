@@ -22,28 +22,34 @@
                        placeholder="Type your answer here...">
             </div>
 
-            <div class="grid grid-cols-5 gap-1 mt-4">
+            <div class="grid grid-cols-3 gap-4 mt-4 p-4 border-2 border-gray-300 rounded-lg shadow">
                 <!-- Submit Answers Button -->
                 <Link :href="route('question.results.show', { question: question.id })" as="button"
-                      class="mt-4 ml-4 px-4 py-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out hover:bg-blue-600 shadow hover:shadow-lg">
+                      class="px-4 py-2 bg-blue-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-blue-600 shadow-md hover:shadow-xl">
                     {{ __('Submit Answers') }}
                 </Link>
 
-                <!-- Delete Button -->
-                <Link :href="route('question.destroy', question)" method="DELETE" as="button"
-                      class="mt-4 ml-4 px-4 py-2 bg-red-500 text-white rounded transition duration-300 ease-in-out hover:bg-red-600 shadow hover:shadow-lg">
-                    {{ __('Delete') }}
+                <!-- Edit Button -->
+                <Link :href="route('question.edit', question)" method="GET" as="button"
+                      class="px-4 py-2 bg-green-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-green-600 shadow-md hover:shadow-xl">
+                    {{ __('Edit') }}
                 </Link>
 
                 <!-- Duplicate Button -->
                 <Link :href="route('question.duplicate', question)" method="POST" as="button"
-                      class="mt-4 ml-4 px-4 py-2 bg-sky-500 text-white rounded transition duration-300 ease-in-out hover:bg-sky-600 shadow hover:shadow-lg">
+                      class="px-4 py-2 bg-sky-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-sky-600 shadow-md hover:shadow-xl">
                     {{ __('Duplicate') }}
+                </Link>
+
+                <!-- Delete Button -->
+                <Link :href="route('question.destroy', question)" method="DELETE" as="button"
+                      class="px-4 py-2 bg-red-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-red-600 shadow-md hover:shadow-xl">
+                    {{ __('Delete') }}
                 </Link>
 
                 <!-- Close Voting Button -->
                 <Link :href="route('question.close', question)" method="PUT" as="button"
-                      class="mt-4 ml-4 px-4 py-2 bg-gray-500 text-white rounded transition duration-300 ease-in-out hover:bg-gray-600 shadow hover:shadow-lg">
+                      class="px-4 py-2 bg-gray-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-gray-600 shadow-md hover:shadow-xl">
                     {{ __('Close Voting') }}
                 </Link>
 
@@ -51,11 +57,12 @@
                 <Link :href="route('question.active', {question: question.id, active: !question.is_active})"
                       method="PUT"
                       as="button"
-                      class="mt-4 ml-4 px-4 py-2 text-white rounded transition duration-300 ease-in-out shadow hover:shadow-lg"
-                      :class="question.is_active ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'">
+                      class="px-4 py-2 rounded-md font-semibold tracking-wide transition duration-300 ease-in-out shadow-md hover:shadow-xl"
+                      :class="question.is_active ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white'">
                     {{ question.is_active ? 'Deactivate' : 'Activate' }}
                 </Link>
             </div>
+
 
         </div>
     </div>
