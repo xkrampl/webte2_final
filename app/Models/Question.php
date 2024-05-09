@@ -23,7 +23,8 @@ class Question extends Model
         'type',
         'is_active',
         'archive_note',
-        'archived_at'
+        'archived_at',
+        'subject_id'
     ];
 
     public static function booted() {
