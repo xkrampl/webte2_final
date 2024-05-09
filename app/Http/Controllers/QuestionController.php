@@ -65,7 +65,8 @@ class QuestionController extends Controller
 
         $question = $question->load(['user', 'subject', 'answers']);
         return inertia('Question/Edit', [
-            'question' => $question
+            'question' => $question,
+            'subjects' => Subject::orderBy('name', 'desc')->get()
         ]);
     }
 
@@ -73,17 +74,28 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
+        // Delete all answers if user wants specific answers, not opened
+        if ($request->type === 'opened' && $question->type === 'answers') {
+            $question->answers()->delete();
+        }
+
         $question->update($request->validated());
 
         if ($request->type === 'answers') {
+            $answer_ids = [];
+
             foreach ($request->answers as $index => $answerText) {
-                $question->answers()->updateOrCreate([
+                $answer = $question->answers()->updateOrCreate([
                     'question_id' => $question->id,
                     'user_id'     => $request->user()->id,
                     'text'        => $answerText,
                     'is_correct'  => $request->correctAnswers[$index],
                 ]);
+
+                $answer_ids[] = $answer->id;
             }
+
+            $question->answers()->whereNotIn('id', $answer_ids)->delete();
         }
 
         return redirect()->back()->with('success', __('You have modified the question.'));
