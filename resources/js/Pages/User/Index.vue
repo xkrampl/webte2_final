@@ -45,6 +45,9 @@
                     <div>
                         <h2 class="text-lg font-bold mb-1">{{ question.subject.name }}</h2>
                         <p class="text-gray-700">{{ question.description }}</p>
+                        <span class="text-sm text-gray-600 italic"> {{ __('Created at') }}: {{
+                                moment(question.created_at).format('Do MMMM YYYY, h:mm')
+                            }}</span>
                     </div>
                     <span :class="tagColor(question.type)"
                           class="text-sm font-semibold px-3 py-1 rounded-full text-white">{{ question.type }}</span>
@@ -60,9 +63,9 @@
                     <ul>
                         <li v-for="answer in question.answers" :key="answer.id" class="mt-2 flex items-center">
                             <p class="flex-1">{{ answer.text }}</p>
-                            <span :class="answer.is_correct ? 'text-green-500' : 'text-red-500'" class="font-medium">
-                {{ answer.is_correct ? '✓' : '✗' }}
-              </span>
+                            <span :class="answer.is_correct ? 'text-green-500' : 'text-red-500'"
+                                  class="font-medium"> {{ answer.is_correct ? '✓' : '✗' }}
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -75,6 +78,7 @@
 import {computed} from "vue";
 import {useForm} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
+import moment from "moment";
 
 const props = defineProps({
     questions: Object,

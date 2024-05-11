@@ -49,6 +49,7 @@
     "Close Voting" : "Uzatvor hlasovanie",
     "Edit question" : "Uprav otázku",
     "Edit existing question" : "Uprav existujúcu otázku",
+    "Created at" : "Vytvorené",
     "(and :count more error)": "(a :count ďalších chýb)",
     "(and :count more errors)": "(a :count ďalších chýb)|(a :count ďalších chýb)|(a :count ďalších chýb)",
     "All rights reserved.": "Všetky práva vyhradené.",
