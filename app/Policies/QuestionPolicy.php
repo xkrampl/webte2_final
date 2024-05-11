@@ -94,13 +94,4 @@ class QuestionPolicy
 
         return $user->id === $question->user->id;
     }
-
-    public function closeVoting(User $user, Question $question)
-    {
-        if ($question->type === 'archived') {
-            return Response::deny(__('This question is archived and cannot be edited.'));
-        }
-
-        return $user->id === $question->user->id;
-    }
 }

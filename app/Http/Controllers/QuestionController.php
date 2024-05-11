@@ -113,6 +113,7 @@ class QuestionController extends Controller
     {
         return inertia('Question/Results', [
             'answers'         => $question->answers()->get(),
+            'archives' => $question->archive()->get(),
             'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])->first()->answers_count,
             'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])->first()->answers_count
         ]);
@@ -135,19 +136,5 @@ class QuestionController extends Controller
         $new_question->save();
 
         return redirect()->back()->with('success', __('You have duplicated the question.'));
-    }
-
-    public function closeVoting(Question $question, Request $request)
-    {
-        Gate::authorize('closeVoting', $question);
-
-        $request->validate(['archive_note' => 'required|string|min:5']);
-
-        $question->update([
-            'is_active' => 0,
-            'archive_note' => $request->only('archive_note')
-        ]);
-
-        return redirect()->route('homepage')->with('success', __('You archived the question.'));
     }
 }
