@@ -45,7 +45,7 @@
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }" v-if="!page.props.user">
-                                                    <Link :href="route('login.create')"
+                                                    <Link :href="route('login')"
                                                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                         {{ __('Login') }}
                                                     </Link>
@@ -57,7 +57,7 @@
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }" v-if="page.props.user">
-                                                    <Link method="delete" :href="route('login.destroy')"
+                                                    <Link :href="route('login.destroy')" method="delete" as="button"
                                                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                         {{ __('Logout') }}
                                                     </Link>

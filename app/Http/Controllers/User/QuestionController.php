@@ -15,6 +15,7 @@ class QuestionController extends Controller
             'questions' => auth()->user()->questions()
                 ->with(['answers', 'subject'])
                 ->filter($filters)
+                ->published()
                 ->latest()
                 ->get(),
             'filters' => $filters

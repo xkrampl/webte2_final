@@ -19,12 +19,11 @@ class Question extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'subject_id',
+        'archive_id',
         'description',
         'type',
         'is_active',
-        'archive_note',
-        'archived_at',
-        'subject_id'
     ];
 
     public static function booted() {
@@ -50,6 +49,11 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function archives(): HasMany
+    {
+        return $this->hasMany(Archive::class);
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
@@ -60,6 +64,12 @@ class Question extends Model
                 return $query->whereHas('subject', function ($query) use ($subject) {
                     $query->where('name', $subject);
                 });
-            });
+            })
+            ->when($filters['archived'] ?? false, fn ($query, $value) => $query->whereNotNull('archive_id'));
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->whereNotNull('archive_id');
     }
 }

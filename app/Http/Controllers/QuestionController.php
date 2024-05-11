@@ -74,9 +74,14 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
-        // Delete all answers if user wants specific answers, not opened
+        // Delete all answers if user wants specific answers, not opened,
+        // without deleting answers that have archives
         if ($request->type === 'opened' && $question->type === 'answers') {
-            $question->answers()->delete();
+            foreach ($question->answers()->get() as $answer) {
+                if (!$answer->archives()->exists()) {
+                    $answer->delete();
+                }
+            }
         }
 
         $question->update($request->validated());

@@ -11,7 +11,7 @@
 
             <div>
                 <label for="subject" class="block text-lg font-medium text-gray-800">{{ __('Subject') }}</label>
-                <select v-model="form.subject_id" id="subject" name="subject"
+                <select v-model="form.subject" id="subject" name="subject"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     <option v-for="subject in subjects" :key="subject.id" :value="subject.id">{{
                             subject.name
@@ -87,7 +87,7 @@ const subjects = computed(() => props.subjects)
 
 const form = useForm({
     description: question.value.description ?? null,
-    subject_id: question.value.subject.id ?? null,
+    subject: question.value.subject.id ?? null,
     type: question.value.type ?? 'opened',
     numberOfAnswers: question.value.answers.length ?? 2,
     answers: question.value.answers.map(answer => answer.text),

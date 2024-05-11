@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -26,18 +27,19 @@ Route::put('question/{question}/active', [QuestionController::class, 'setActive'
 Route::post('question/{question}/duplicate', [QuestionController::class, 'duplicate'])
     ->middleware('auth')
     ->name('question.duplicate');
-Route::put('question/{question}/close-voting', [QuestionController::class, 'closeVoting'])
+
+Route::post('question/{question}/archive', [ArchiveController::class, 'store'])
     ->middleware('auth')
-    ->name('question.close');
+    ->name('question.archive');
 
 // Auth
 Route::group(['prefix' => 'auth'], function () {
 
-    Route::get('login', [LoginController::class, 'create'])->name('login.create');
+    Route::get('login', [LoginController::class, 'create'])->name('login');
     Route::post('login', [LoginController::class, 'store'])->name('login.store');
     Route::delete('logout', [LoginController::class, 'destroy'])->name('login.destroy');
 
-    Route::get('register', [RegisterController::class, 'create'])->name('register.create');
+    Route::get('register', [RegisterController::class, 'create'])->name('register');
     Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
     Route::get('change-password', [ChangePasswordController::class, 'create'])

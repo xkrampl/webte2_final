@@ -47,12 +47,6 @@
                     {{ __('Delete') }}
                 </Link>
 
-                <!-- Close Voting Button -->
-                <Link :href="route('question.close', question)" method="PUT" as="button"
-                      class="px-4 py-2 bg-gray-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-gray-600 shadow-md hover:shadow-xl">
-                    {{ __('Close Voting') }}
-                </Link>
-
                 <!-- Activate/Deactivate Button -->
                 <Link :href="route('question.active', {question: question.id, active: !question.is_active})"
                       method="PUT"
@@ -61,6 +55,13 @@
                       :class="question.is_active ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white'">
                     {{ question.is_active ? 'Deactivate' : 'Activate' }}
                 </Link>
+
+                <!-- Archive -->
+                <form @submit.prevent="archive">
+                    {{ __('Archive') }}
+                    <input v-model="formArchive.note" type="text">
+                    <button type="submit">{{ __('Submit') }}</button>
+                </form>
             </div>
 
 
@@ -71,7 +72,7 @@
 <script setup>
 import {computed, defineProps, ref} from 'vue'
 import {route} from "ziggy-js";
-import {Link} from '@inertiajs/vue3'
+import {Link, router, useForm} from '@inertiajs/vue3'
 
 const props = defineProps({
     question: Object,
@@ -90,6 +91,12 @@ const submitAnswers = () => {
         console.log('User answer:', userAnswer.value); // Handling user input for 'opened' type questions
     }
 }
+
+const formArchive = useForm({
+    note: null,
+})
+
+const archive = () => formArchive.post(route('question.archive', question.value))
 </script>
 
 <style scoped>

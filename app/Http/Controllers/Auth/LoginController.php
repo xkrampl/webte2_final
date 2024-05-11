@@ -21,7 +21,7 @@ class LoginController extends Controller
             'password' => 'required|string'
         ]), true)) {
             throw ValidationException::withMessages([
-                'email' => 'Authentication failed.'
+                'password' => __('Incorrect password or email.')
             ]);
         }
 
