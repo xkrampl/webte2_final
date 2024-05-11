@@ -24,7 +24,6 @@ class QuestionRequest extends FormRequest
         return [
             'description' => 'required|min:5',
             'type'        => 'required|string|in:answers,opened',
-            'subject_id'  => 'required|exists:subjects,id',
             'answers'     => 'required_if:type,answers|array',
             'answers.*'   => 'nullable|required_if:type,answers|string|min:1'
         ];
