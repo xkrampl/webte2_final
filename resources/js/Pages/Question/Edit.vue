@@ -7,6 +7,9 @@
                 <label for="description" class="block text-lg font-medium text-gray-800">{{ __('Description') }}</label>
                 <input type="text" v-model="form.description" id="description" name="description"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <div v-if="form.errors.description" class="text-red-500 text-xs italic">
+                    {{ form.errors.description }}
+                </div>
             </div>
 
             <div>
@@ -52,6 +55,12 @@
                         <input type="text" v-model="form.answers[index - 1]" :id="'answer' + index"
                                :name="'answer' + index"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+
+                        <!-- Displaying errors for each answer -->
+                        <div v-if="form.errors.answers && form.errors.answers[index - 1]"
+                             class="text-red-500 text-xs italic">
+                            {{ form.errors.answers[index - 1] }}
+                        </div>
 
                         <!-- Checkbox for marking as correct or false -->
                         <label class="inline-flex items-center mt-3">

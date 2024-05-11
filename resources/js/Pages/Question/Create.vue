@@ -6,6 +6,10 @@
             <div class="mb-4">
                 <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
                 <input type="text" v-model="form.description" id="description" name="description" class="input-field">
+
+                <div v-if="form.errors.description" class="text-red-500 text-xs italic">
+                    {{ form.errors.description }}
+                </div>
             </div>
 
             <div class="mb-4">
