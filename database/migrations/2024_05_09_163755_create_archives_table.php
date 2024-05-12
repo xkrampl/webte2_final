@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('archives', function (Blueprint $table) {
             $table->id();
-
-            // Relations
-            $table->foreignIdFor(\App\Models\User::class)->nullable();
-            $table->foreignUuid('question_id')->references('id')->on('questions')->onDelete('cascade');
-
-            $table->text('text');
-            $table->boolean('is_correct')->default(false);
-
+            $table->text('note');
             $table->timestamps();
         });
     }
@@ -30,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('archives');
     }
 };

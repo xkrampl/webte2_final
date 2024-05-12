@@ -17,14 +17,12 @@ return new class extends Migration
             // Relations
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Subject::class);
+            $table->foreignIdFor(\App\Models\Archive::class)->nullable();
 
             $table->string('description');
-            $table->enum('type', ['answers', 'opened', 'archived']);
+            $table->enum('type', ['answers', 'opened']);
 
             $table->boolean('is_active')->default(true);
-
-            $table->string('archive_note')->nullable();
-            $table->dateTime('archived_at')->nullable();
 
             $table->timestamps();
         });

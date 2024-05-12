@@ -20,7 +20,7 @@
                 </button>
 
                 <div class="mt-2 text-center">
-                    <Link :href="route('register.create')"
+                    <Link :href="route('register')"
                           class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                         {{ __('Need an account? Click here.') }}
                     </Link>

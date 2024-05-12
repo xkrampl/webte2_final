@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -19,12 +20,11 @@ class Question extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'subject_id',
+        'archive_id',
         'description',
         'type',
         'is_active',
-        'archive_note',
-        'archived_at',
-        'subject_id'
     ];
 
     public static function booted() {
@@ -50,6 +50,11 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function archives(): BelongsToMany
+    {
+        return $this->belongsToMany(Archive::class);
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
@@ -60,6 +65,8 @@ class Question extends Model
                 return $query->whereHas('subject', function ($query) use ($subject) {
                     $query->where('name', $subject);
                 });
-            });
+            })
+            ->when($filters['user'] ?? false, fn ($query, $user) => $query->where('user_id', $user))
+            ->when($filters['archived'] ?? false, fn ($query, $value) => $query->whereNotNull('archive_id'));
     }
 }
