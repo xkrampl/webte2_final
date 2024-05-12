@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -49,9 +50,9 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function archives(): HasMany
+    public function archives(): BelongsToMany
     {
-        return $this->hasMany(Archive::class);
+        return $this->belongsToMany(Archive::class);
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder
@@ -65,11 +66,7 @@ class Question extends Model
                     $query->where('name', $subject);
                 });
             })
+            ->when($filters['user'] ?? false, fn ($query, $user) => $query->where('user_id', $user))
             ->when($filters['archived'] ?? false, fn ($query, $value) => $query->whereNotNull('archive_id'));
-    }
-
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->whereNotNull('archive_id');
     }
 }

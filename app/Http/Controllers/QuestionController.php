@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionRequest;
-use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Subject;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -19,7 +17,7 @@ class QuestionController extends Controller
 
         return inertia('Question/Show', [
             'question' => $question->load(['user', 'subject', 'answers']),
-            'qrcode' => str_replace(
+            'qrcode'   => str_replace(
                 '<?xml version="1.0" encoding="UTF-8"?>',
                 '',
                 QrCode::size(200)->format('svg')->generate(
@@ -77,14 +75,11 @@ class QuestionController extends Controller
         // Delete all answers if user wants specific answers, not opened,
         // without deleting answers that have archives
         if ($request->type === 'opened' && $question->type === 'answers') {
-            foreach ($question->answers()->get() as $answer) {
-                if (!$answer->archives()->exists()) {
-                    $answer->delete();
-                }
-            }
+            $question->answers()->whereDoesntHave('archives')->delete();
         }
 
         $question->update($request->validated());
+        $question->subject()->associate($request->subject)->save();
 
         if ($request->type === 'answers') {
             $answer_ids = [];
@@ -100,7 +95,10 @@ class QuestionController extends Controller
                 $answer_ids[] = $answer->id;
             }
 
-            $question->answers()->whereNotIn('id', $answer_ids)->delete();
+            $question->answers()
+                ->whereNotIn('id', $answer_ids)
+                ->whereDoesntHave('archives')
+                ->delete();
         }
 
         return redirect()->back()->with('success', __('You have modified the question.'));
@@ -118,9 +116,11 @@ class QuestionController extends Controller
     {
         return inertia('Question/Results', [
             'answers'         => $question->answers()->get(),
-            'archives' => $question->archive()->get(),
-            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])->first()->answers_count,
-            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])->first()->answers_count
+            'archives'        => $question->archives()->get(),
+            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])
+                ->first()->answers_count,
+            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])
+                ->first()->answers_count
         ]);
     }
 

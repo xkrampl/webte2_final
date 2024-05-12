@@ -14,7 +14,7 @@
                     <select v-model="filterForm.subject" id="subject"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         <option disabled value="">{{ __('Select a Subject') }}</option>
-                        <option v-for="subject in uniqueSubjects" :key="subject.name" :value="subject.name">{{
+                        <option v-for="subject in subjects" :key="subject.name" :value="subject.name">{{
                                 subject.name
                             }}
                         </option>
@@ -78,17 +78,19 @@ import {route} from "ziggy-js";
 
 const props = defineProps({
     questions: Object,
-    filters: Object
+    filters: Object,
+    subjects: Object
 })
 
 const questions = computed(() => props.questions)
+const subjects = computed(() => props.subjects)
 const filterForm = useForm({
     created_at: props.filters.created_at ?? null,
     subject: props.filters.subject ?? null,
 })
 
 const filter = () => {
-    filterForm.get(route('user.question.index'), {
+    filterForm.get(route('user.dashboard'), {
         preserveState: true,
         preserveScroll: true
     })
