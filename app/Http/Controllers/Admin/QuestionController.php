@@ -21,7 +21,7 @@ class QuestionController extends Controller
 
     public function store(QuestionRequest $request)
     {
-        $question = User::where('id', $request->user_id)->questions()->save(
+        $question = User::findOrFail($request->user_id)->questions()->save(
             Question::make($request->validated())->subject()->associate($request->subject)
         );
 
