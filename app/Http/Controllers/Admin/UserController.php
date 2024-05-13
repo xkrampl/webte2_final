@@ -9,6 +9,7 @@ use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -26,6 +27,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
         return redirect()
             ->route('user.index')
             ->with('success', __('You have created a new user.'));
@@ -40,6 +47,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $user->update($request->only(['name', 'email', 'password']));
         return redirect()->back()->with('success', __('You have modified the user.'));
     }
 

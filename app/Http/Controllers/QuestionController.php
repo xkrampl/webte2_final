@@ -116,10 +116,17 @@ class QuestionController extends Controller
     {
         return inertia('Question/Results', [
             'answers'         => $question->answers()->get(),
-            'archives'        => $question->archives()->get(),
-            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])
+            'archives'        => $question->archives()->withCount([
+                'answers as count_correct'   => fn ($query) => $query->where('is_correct', true)->whereHas('question', function ($q) use ($question) {
+                    $q->where('question_id', $question->id);
+                }),
+                'answers as count_incorrect' => fn ($query) => $query->where('is_correct', false)->whereHas('question', function ($q) use ($question) {
+                    $q->where('question_id', $question->id);
+                })
+            ])->get(),
+            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)->whereDoesntHave('archives')])
                 ->first()->answers_count,
-            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])
+            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)->whereDoesntHave('archives')])
                 ->first()->answers_count
         ]);
     }
