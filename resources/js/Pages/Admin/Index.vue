@@ -21,7 +21,7 @@ const filterForm = useForm({
 })
 
 const filter = () => {
-    filterForm.get(route('user.dashboard'), {
+    filterForm.get(route('admin.dashboard'), {
         preserveState: true,
         preserveScroll: true
     })
