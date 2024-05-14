@@ -7063,16 +7063,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "15.3.0",
+            "version": "15.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "84b14c6c70daee9c5f18c3f5058a8e4e71c836ba"
+                "reference": "71a42b41268cf9e45803d00c79ff08cde252baee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/84b14c6c70daee9c5f18c3f5058a8e4e71c836ba",
-                "reference": "84b14c6c70daee9c5f18c3f5058a8e4e71c836ba",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/71a42b41268cf9e45803d00c79ff08cde252baee",
+                "reference": "71a42b41268cf9e45803d00c79ff08cde252baee",
                 "shasum": ""
             },
             "require": {
@@ -7122,7 +7122,7 @@
                 "issues": "https://github.com/Laravel-Lang/lang/issues",
                 "source": "https://github.com/Laravel-Lang/lang"
             },
-            "time": "2024-05-11T11:14:57+00:00"
+            "time": "2024-05-13T15:53:27+00:00"
         },
         {
             "name": "laravel-lang/publisher",

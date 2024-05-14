@@ -55,15 +55,17 @@
                       :class="question.is_active ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white'">
                     {{ question.is_active ? 'Deactivate' : 'Activate' }}
                 </Link>
-
-                <!-- Archive -->
-                <form @submit.prevent="archive">
-                    {{ __('Archive') }}
-                    <input v-model="formArchive.note" type="text">
-                    <button type="submit">{{ __('Submit') }}</button>
-                </form>
             </div>
 
+            <!-- Archive -->
+            <form @submit.prevent="archive" class="mt-4">
+                <input v-model="formArchive.note" type="text"
+                       class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <button type="submit"
+                        class="ml-4 px-4 py-2 rounded-md font-semibold tracking-wide transition duration-300 ease-in-out shadow-md hover:shadow-xl bg-blue-500 hover:bg-blue-600 text-white">
+                    {{ __('Archive') }}
+                </button>
+            </form>
 
         </div>
     </div>
@@ -72,7 +74,7 @@
 <script setup>
 import {computed, defineProps, ref} from 'vue'
 import {route} from "ziggy-js";
-import {Link, router, useForm} from '@inertiajs/vue3'
+import {Link, useForm} from '@inertiajs/vue3'
 
 const props = defineProps({
     question: Object,

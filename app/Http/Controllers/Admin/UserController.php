@@ -34,7 +34,7 @@ class UserController extends Controller
         ]);
 
         return redirect()
-            ->route('user.index')
+            ->route('admin.user.index')
             ->with('success', __('You have created a new user.'));
     }
 

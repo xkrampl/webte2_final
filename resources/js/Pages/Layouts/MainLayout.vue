@@ -43,14 +43,21 @@
                                                           v-if="page.props.user && page.props.user.is_admin">
                                                     <Link :href="route('admin.dashboard')"
                                                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        {{ __('Admin Dashboard') }}
+                                                        {{ __('Dashboard') }}
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }"
                                                           v-if="page.props.user && page.props.user.is_admin">
                                                     <Link :href="route('admin.user.index')"
                                                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        {{ __('Admin View Users') }}
+                                                        {{ __('View Users') }}
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem v-slot="{ active }"
+                                                          v-if="page.props.user && page.props.user.is_admin">
+                                                    <Link :href="route('admin.user.create')"
+                                                          :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                        {{ __('Create New User') }}
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }"
@@ -64,7 +71,7 @@
                                                           v-if="page.props.user && page.props.user.is_admin">
                                                     <Link :href="route('admin.question.create')"
                                                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        {{ __('Admin Create Question') }}
+                                                        {{ __('Create Question') }}
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }" v-if="!page.props.user">
