@@ -47,7 +47,22 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($request->only(['name', 'email', 'password']));
+        $rules = [
+            'name' => 'required|string|max:255',
+            'is_admin' => 'required|boolean'
+        ];
+
+        if ($request->email !== $request->user->email) {
+            $rules['email'] = 'required|email|unique:users,email';
+        }
+
+        if ($request->filled('password')) {
+            $rules['password'] = 'required|min:8';
+        }
+
+        $data = $request->validate($rules);
+        $request->user()->update($data);
+
         return redirect()->back()->with('success', __('You have modified the user.'));
     }
 
