@@ -11,7 +11,7 @@
                         </button>
 
                         <!-- Edit Button -->
-                        <Link :href="route('admin.user.edit', user)" method="GET" as="button"
+                        <Link :href="route('admin.user.edit', user.id)" method="GET" as="button"
                               class="px-4 py-2 bg-green-500 text-white rounded-md font-semibold tracking-wide transition duration-300 ease-in-out hover:bg-green-600 shadow-md hover:shadow-xl">
                             {{ __('Edit') }}
                         </Link>

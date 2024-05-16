@@ -11,6 +11,7 @@ const form = useForm({
     name: props.user.name,
     email: props.user.email,
     password: '',
+    is_admin: props.user.is_admin !== undefined ? props.user.is_admin : 0,
 });
 
 const user = computed(() => props.user);
@@ -39,6 +40,14 @@ const save = () => {
                 <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
                 <input type="password" id="password" v-model="form.password"
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div>
+                <label for="is_admin" class="block text-sm font-medium text-gray-700">{{ __('Admin') }}</label>
+                <select id="is_admin" v-model="form.is_admin"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="0">{{ __('No') }}</option>
+                    <option value="1">{{ __('Yes') }}</option>
+                </select>
             </div>
 
             <div class="flex justify-end">
