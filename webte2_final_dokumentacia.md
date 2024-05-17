@@ -5,9 +5,9 @@
 ### Rozdelenie úloh
 
 * Matúš Petrovaj - __frontend__ časť
-* Adam Krampl - __backend časť__
+* Adam Krampl - __backend__ časť
 
-### Adresa zadania na servery
+### Adresa zadania na serveri
 
 * //TODO
 
@@ -19,9 +19,13 @@
 
 * //TODO
 
+### Adresa repozitáru so zadaním na GitHube
+
+* https://github.com/xkrampl/webte2_final
+
 ### Dodatočná inštalácia
 
-* Docker
+* __Docker__
 * Backend
     * __Laravel__ - php framework
 * Frontend
