@@ -7,7 +7,6 @@
         <div v-html="qrcode"></div>
 
         <div class="mt-4">
-
             <form @submit.prevent="submit">
                 <p v-if="question.type === 'answers'" class="text-gray-800 font-medium mb-4">{{
                         __('Choose your answer')
@@ -15,7 +14,7 @@
                 <div v-if="question.type === 'answers'" v-for="answer in question.answers" :key="answer.id"
                      :class="{'bg-green-200': isSubmitted && answer.is_correct, 'bg-red-200': isSubmitted && !answer.is_correct}">
                     <label class="flex items-center p-2">
-                        <input type="checkbox" v-model="form.text" :value="answer.id" class="mr-2">
+                        <input type="checkbox" v-model="selectedAnswers" :value="answer.id" class="mr-2">
                         {{ answer.text }}
                     </label>
                 </div>
@@ -28,7 +27,6 @@
                     {{ __('Submit') }}
                 </button>
             </form>
-
 
             <div class="grid grid-cols-4 gap-4 mt-4 p-4 border-2 border-gray-300 rounded-lg shadow">
                 <!-- Edit Button -->
@@ -55,7 +53,7 @@
                       as="button"
                       class="px-4 py-2 rounded-md font-semibold tracking-wide transition duration-300 ease-in-out shadow-md hover:shadow-xl"
                       :class="question.is_active ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white'">
-                    {{ question.is_active ? 'Deactivate' : 'Activate' }}
+                    {{ question.is_active ? __('Deactivate') : __('Activate') }}
                 </Link>
             </div>
 
@@ -68,7 +66,6 @@
                     {{ __('Archive') }}
                 </button>
             </form>
-
         </div>
     </div>
 </template>
@@ -88,21 +85,18 @@ const selectedAnswers = ref([])
 const userAnswer = ref('') // For 'opened' type questions
 const isSubmitted = ref(false)
 
-
-const submit = () => form.post(route('answer.store', {question: question.value}))
-
-const submitAnswers = () => {
+const submit = () => {
     isSubmitted.value = true;
-    console.log('Selected Answers:', selectedAnswers.value);
     if (question.value.type === 'opened') {
-        console.log('User answer:', userAnswer.value); // Handling user input for 'opened' type questions
-        return userAnswer.value;
+        form.text = userAnswer.value;
+    } else if (question.value.type === 'answers') {
+        form.text = selectedAnswers.value.join(','); // Sending selected answers as comma-separated string
     }
-    return selectedAnswers.value;
+    form.post(route('answer.store', {question: question.value}));
 }
 
 const form = useForm({
-    text: selectedAnswers.value,
+    text: '',
 })
 
 const formArchive = useForm({
