@@ -6,7 +6,8 @@
             <li v-for="(answer, index) in answers" :key="index"
                 class="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
                 :class="{'bg-green-100 text-green-800': answer.is_correct, 'bg-red-100 text-red-800': !answer.is_correct}">
-                {{ answer.text }} - <strong>{{ answer.is_correct ? 'Correct' : 'Incorrect' }}</strong>
+                <strong>{{ answer.id }}</strong>: {{ answer.text }} -
+                <strong>{{ answer.is_correct ? 'Correct' : 'Incorrect' }}</strong>
             </li>
         </ul>
         <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">{{ __('Summary') }}:</h3>
