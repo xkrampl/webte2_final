@@ -170,6 +170,14 @@
             </div>
         </header>
 
+        <div v-if="flashSuccess" class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-purple-600 to-blue-400 text-white p-2">
+            {{ flashSuccess }}
+        </div>
+
+        <div v-if="flashError" class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-red-600 to-rose-400 text-white p-2">
+            {{ flashError }}
+        </div>
+
         <main class="flex-grow container max-w-screen-2xl mx-auto px-4 py-8">
             <slot/>
         </main>
@@ -184,7 +192,7 @@
 
 
 <script setup>
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import {jsPDF} from "jspdf";
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import {ChevronDownIcon} from '@heroicons/vue/20/solid'
@@ -207,6 +215,11 @@ function exportToPDF() {
     doc.text(lines, 40, 40); // Start the text 40 points from the top and 40 from the left margin
     doc.save('user-manual.pdf');
 }
+
+const flashSuccess = computed(() => page.props.flash.success)
+const flashError = computed(() => page.props.flash.error)
+
+console.log(page.props.flash)
 </script>
 
 <style scoped>
