@@ -72,10 +72,9 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
-        // Delete all answers if user wants specific answers, not opened,
-        // without deleting answers that have archives
+        // Delete all answers if user wants specific answers, not opened
         if ($request->type === 'opened' && $question->type === 'answers') {
-            $question->answers()->whereDoesntHave('archives')->delete();
+            $question->answers()->delete();
         }
 
         $question->update($request->validated());
@@ -97,7 +96,6 @@ class QuestionController extends Controller
 
             $question->answers()
                 ->whereNotIn('id', $answer_ids)
-                ->whereDoesntHave('archives')
                 ->delete();
         }
 
@@ -116,17 +114,9 @@ class QuestionController extends Controller
     {
         return inertia('Question/Results', [
             'answers'         => $question->answers()->get(),
-            'archives'        => $question->archives()->withCount([
-                'answers as count_correct'   => fn ($query) => $query->where('is_correct', true)->whereHas('question', function ($q) use ($question) {
-                    $q->where('question_id', $question->id);
-                }),
-                'answers as count_incorrect' => fn ($query) => $query->where('is_correct', false)->whereHas('question', function ($q) use ($question) {
-                    $q->where('question_id', $question->id);
-                })
-            ])->get(),
-            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)->whereDoesntHave('archives')])
+            'count_correct'   => $question->withCount(['answers' => fn($q) => $q->where('is_correct', true)])
                 ->first()->answers_count,
-            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)->whereDoesntHave('archives')])
+            'count_incorrect' => $question->withCount(['answers' => fn($q) => $q->where('is_correct', false)])
                 ->first()->answers_count
         ]);
     }

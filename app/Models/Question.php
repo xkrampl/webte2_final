@@ -21,7 +21,6 @@ class Question extends Model
 
     protected $fillable = [
         'subject_id',
-        'archive_id',
         'description',
         'type',
         'is_active',
@@ -50,11 +49,6 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function archives(): BelongsToMany
-    {
-        return $this->belongsToMany(Archive::class);
-    }
-
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
@@ -66,7 +60,6 @@ class Question extends Model
                     $query->where('name', $subject);
                 });
             })
-            ->when($filters['user'] ?? false, fn ($query, $user) => $query->where('user_id', $user))
-            ->when($filters['archived'] ?? false, fn ($query, $value) => $query->whereNotNull('archive_id'));
+            ->when($filters['user'] ?? false, fn ($query, $user) => $query->where('user_id', $user));
     }
 }

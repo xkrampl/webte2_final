@@ -17,7 +17,6 @@ return new class extends Migration
             // Relations
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Subject::class);
-            $table->foreignIdFor(\App\Models\Archive::class)->nullable();
 
             $table->string('description');
             $table->enum('type', ['answers', 'opened']);

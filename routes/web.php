@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -32,10 +31,6 @@ Route::put('question/{question}/active', [QuestionController::class, 'setActive'
 Route::post('question/{question}/duplicate', [QuestionController::class, 'duplicate'])
     ->middleware('auth')
     ->name('question.duplicate');
-
-Route::post('question/{question}/archive', [ArchiveController::class, 'store'])
-    ->middleware('auth')
-    ->name('question.archive');
 
 // Auth
 Route::group(['prefix' => 'auth'], function () {
