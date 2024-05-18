@@ -9,15 +9,17 @@
 
 ### Adresa zadania na serveri
 
-* //TODO
+* http://node63.webte.fei.stuba.sk:8000/
 
-### Databáza - Adminer
+### Databáza MySQL - PhpMyAdmin
 
-* //TODO
+* http://node63.webte.fei.stuba.sk:8080/
+    * Používateľ: __root__
+    * Heslo: __root__
 
 ### Konfiguračný súbor
 
-* //TODO
+* .env súbor
 
 ### Adresa repozitáru so zadaním na GitHube
 
@@ -28,6 +30,7 @@
 * __Docker__
 * Backend
     * __Laravel__ - php framework
+    * __QR kódy__ - https://github.com/SimpleSoftwareIO/simple-qrcode
 * Frontend
     * __Vue.js__ - JavaScript framework
     * __Inertia.js__ - framework pre vývoj moderných aplikácií
