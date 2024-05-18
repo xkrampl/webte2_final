@@ -26,11 +26,9 @@ class QuestionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Question $question): Response
+    public function view(?User $user, Question $question): bool
     {
-        return $question->type !== 'archived'
-            ? Response::allow()
-            : Response::deny(__('This question is archived and not available.'));
+        return true;
     }
 
     /**
@@ -46,10 +44,6 @@ class QuestionPolicy
      */
     public function update(User $user, Question $question): bool|Response
     {
-        if ($question->type === 'archived') {
-            return Response::deny(__('This question is archived and cannot be edited.'));
-        }
-
         return $user->id === $question->user->id;
     }
 
@@ -58,10 +52,6 @@ class QuestionPolicy
      */
     public function delete(User $user, Question $question): bool|Response
     {
-        if ($question->type === 'archived') {
-            return Response::deny(__('This question is archived and cannot be edited.'));
-        }
-
         return $user->id === $question->user->id;
     }
 
@@ -78,7 +68,7 @@ class QuestionPolicy
      */
     public function forceDelete(User $user, Question $question): bool
     {
-        return $user->id === $question->user->id && $question->type !== 'archived';
+        return $user->id === $question->user->id;
     }
 
     public function setActive(User $user, Question $question)
@@ -88,10 +78,6 @@ class QuestionPolicy
 
     public function duplicate(User $user, Question $question)
     {
-        if ($question->type === 'archived') {
-            return Response::deny(__('This question is archived and cannot be edited.'));
-        }
-
         return $user->id === $question->user->id;
     }
 }
