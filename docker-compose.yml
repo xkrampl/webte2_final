@@ -10,11 +10,12 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-            - ./.env:/var/www/.env
         environment:
             - APP_ENV=local
         networks:
             - app-network
+        depends_on:
+            - mysql
     nginx:
         image: nginx:1.21
         container_name: my-nginx
@@ -27,21 +28,21 @@ services:
             - app
         networks:
             - app-network
-    node:
-        build:
-            context: .
-            dockerfile: Dockerfile.node
-        image: my-laravel-node
-        container_name: my-laravel-node
-        ports:
-            - "3000:3000"
-        restart: unless-stopped
-        working_dir: /var/www
-        volumes:
-            - ./:/var/www
-            - /var/www/node_modules
-        networks:
-            - app-network
+#    node:
+#        build:
+#            context: .
+#            dockerfile: Dockerfile.node
+#        image: my-laravel-node
+#        container_name: my-laravel-node
+#        ports:
+#            - "3000:3000"
+#        restart: unless-stopped
+#        working_dir: /var/www
+#        volumes:
+#            - ./:/var/www
+#            - /var/www/node_modules
+#        networks:
+#            - app-network
     mysql:
         image: mariadb:10.8.3
         container_name: mysql
@@ -53,20 +54,26 @@ services:
             - app-network
         ports:
             - "3307:3306"
-    adminer:
-        image: adminer
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
         restart: always
         ports:
-            - 8080:8080
+            - 8080:80
+        environment:
+            PMA_HOST: mysql
+            MYSQL_ROOT_PASSWORD: root
+        depends_on:
+            - mysql
         networks:
             - app-network
-    mailhog:
-        image: mailhog/mailhog
-        ports:
-            - 1025:1025
-            - 8025:8025
-        networks:
-            - app-network
+#    mailhog:
+#        image: mailhog/mailhog
+#        ports:
+#            - 1025:1025
+#            - 8025:8025
+#        networks:
+#            - app-network
 networks:
     app-network:
         driver: bridge
