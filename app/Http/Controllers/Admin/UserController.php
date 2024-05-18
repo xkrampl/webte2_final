@@ -63,7 +63,7 @@ class UserController extends Controller
         $data = $request->validate($rules);
         $user->update($data);
 
-        return redirect()->back()->with('success', __('You have modified the user.'));
+        return redirect()->route('admin.user.index')->with('success', __('You have modified the user.'));
     }
 
     public function destroy(User $user)
