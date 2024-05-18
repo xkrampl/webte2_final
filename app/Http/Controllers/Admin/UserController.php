@@ -61,7 +61,7 @@ class UserController extends Controller
         }
 
         $data = $request->validate($rules);
-        $request->user()->update($data);
+        $user->update($data);
 
         return redirect()->back()->with('success', __('You have modified the user.'));
     }
