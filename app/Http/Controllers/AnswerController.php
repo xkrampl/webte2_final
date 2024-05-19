@@ -14,12 +14,12 @@ class AnswerController extends Controller
             'text' => 'required|string|min:1'
         ]);
 
-        $question->answers()->save(
-            Answer::make([
-                'user_id' => $request->user() ? $request->user()->id : null,
-                'text'    => $request->text
-            ])
-        );
+//        $question->answers()->save(
+//            Answer::make([
+//                'user_id' => $request->user() ? $request->user()->id : null,
+//                'text'    => $request->text
+//            ])
+//        );
 
         return redirect()
             ->route('question.results.show', ['question' => $question])
