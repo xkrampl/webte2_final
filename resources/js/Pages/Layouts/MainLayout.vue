@@ -115,9 +115,10 @@
                                         {{ __('User Manual') }}</h3>
                                     <div class="mt-2 px-7 py-3 text-sm text-gray-500 pdf-content">
                                         <p>
-                                            Here is a <b>manual</b> for the page. Firstly we will start with roles and
+                                            Here is a <b>quick tutorial</b> for the page. Firstly we will start with
+                                            roles and
                                             their
-                                            permissions.
+                                            permissions. The full detailed version is in MANUAL.md file.
                                         </p>
                                         <ul class="list-disc list-inside">
                                             <li>
@@ -170,11 +171,13 @@
             </div>
         </header>
 
-        <div v-if="flashSuccess" class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-purple-600 to-blue-400 text-white p-2">
+        <div v-if="flashSuccess"
+             class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-purple-600 to-blue-400 text-white p-2">
             {{ flashSuccess }}
         </div>
 
-        <div v-if="flashError" class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-red-600 to-rose-400 text-white p-2">
+        <div v-if="flashError"
+             class="mb-4 border rounded-md shadow-sm bg-gradient-to-r from-red-600 to-rose-400 text-white p-2">
             {{ flashError }}
         </div>
 
